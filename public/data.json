@@ -1,0 +1,50 @@
+{
+  "PAYS": [
+    "FRANCE",
+    "ESPAGNE",
+    "ITALIE",
+    "ALLEMAGNE",
+    "CROATIE",
+    "ANGLETERRE"
+  ],
+  "FILM": [
+    "LE CINQUIEME ELEMENT",
+    "LES DENTS DE LA MER",
+    "INDEPENDANCE DAY",
+    "SUPERMAN",
+    "VOLCANO",
+    "EN EAUX TROUBLES"
+  ],
+  "SERIES": [
+    "SUPERCOPTER",
+    "TONNERRE MECANIQUE",
+    "SUPERMAN",
+    "UNE NOUNOU D ENFER",
+    "ESPRITS CRIMINELS",
+    "LIE TO ME"
+  ],
+  "MANGAS": [
+    "NARUTO",
+    "BLEACH",
+    "FAIRY TAIL",
+    "COSMOCATS",
+    "GOLDORAK",
+    "DEATH NOTE"
+  ],
+  "ECRIVAINS": [
+    "EMILE ZOLA",
+    "MOLIERE",
+    "JEAN JACQUES ROUSSEAU",
+    "VOLTAIRE",
+    "VICTOR HUGO",
+    "JULES VERNE"
+  ],
+  "MUSICIEN": [
+    "WOLFGANG AMADEUS MOZART",
+    "JEAN SEBASTIEN BACH",
+    "LUDWIG VAN BEETHOVEN",
+    "JOHANNES BRAHMS",
+    "GIUSEPPE VERDI",
+    "PIOTR ILITCH TCHAIKOVSKI"
+  ]
+}
