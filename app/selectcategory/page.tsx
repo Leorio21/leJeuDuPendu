@@ -2,6 +2,7 @@ import React from "react";
 import { promises as fs } from "fs";
 import Link from "next/link";
 import styles from "./page.module.css";
+import classNames from "classnames";
 import CategoryCard from "../Components/CategoryCard/CategoryCard";
 import Title from "../Components/Title/Title";
 import { IoArrowUndoSharp } from "react-icons/io5";
@@ -34,15 +35,15 @@ export default async function page() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={classNames(styles.container)}>
       <Link href="/">
-        <Button width={30} classStyle={styles.backButton}>
+        <Button width={30} back={true}>
           <IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} />
         </Button>
       </Link>
-      <section className={styles.gameApp}>
+      <section className={classNames(styles.gameApp)}>
         <Title name="Choisissez une catégorie" />
-        <div className={styles.categoriesContainer}>
+        <div className={classNames(styles.categoriesContainer)}>
           {categories.map((categorie) => (
             <CategoryCard
               key={categorie}

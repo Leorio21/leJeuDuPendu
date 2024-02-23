@@ -1,13 +1,15 @@
 import React, { PropsWithChildren } from 'react';
+import classNames from "classnames/bind";
 import styles from "./Button.module.css"
 
+const cx = classNames.bind(styles);
 interface ButtonProps extends PropsWithChildren {
   width: number;
-  classStyle?: string;
+  back?: boolean;
 };
 
-export default function Button({ width, classStyle = "", children }: ButtonProps) {
+export default function Button({ width, back = false, children }: ButtonProps) {
   return (
-    <div style={{height:`${width}px`, width:`${width}px`}} className={`${styles.container} ${classStyle}`}>{ children }</div>
+    <div style={{height:`${width}px`, width:`${width}px`}} className={cx({container: true, backButton: back})}>{ children }</div>
   )
 }

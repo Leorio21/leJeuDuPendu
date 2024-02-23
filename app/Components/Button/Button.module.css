@@ -9,3 +9,9 @@
       rgb(var(--button-color--dark))
     );
 }
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}

@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 import styles from "./CategoryCard.module.css";
+import Link from 'next/link';
+import classNames from "classnames";
 
 interface CategoryCardProps {
   item: string;
@@ -9,16 +11,16 @@ interface CategoryCardProps {
 
 export default function CategoryCard({ item, content }: CategoryCardProps) {
 
-  const click = () => {
-    console.log(content);
-    console.log(content.length);
+  const randomNumber = ( min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
+  const wordIndex = randomNumber(0, content.length);
 
   if (item === "Error") {
     return <p>Une erreur est survenue</p>
   }
 
   return (
-    <p className={`${styles.card} ${styles.category}`} onClick={() => click()}>{item}</p>
+    <Link className={classNames(styles.card)} href={{ pathname: '/play', query: { name: 'test' } }}>{item}</Link>
   )
 }

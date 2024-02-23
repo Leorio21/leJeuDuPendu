@@ -12,12 +12,6 @@
   max-width: 1200px;
 }
 
-.backButton {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
 @media (width > 576px) {
   .categoriesContainer {
     grid-template-columns: repeat(4, 25%);
