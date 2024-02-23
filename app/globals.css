@@ -1,4 +1,10 @@
 :root {
+  /* breakpoints */
+  --small: 576px;
+  --medium: 768px;
+  --large: 1200px;
+  
+  /* colors */
   --backgroundColor-dark: 32, 8, 78;
   --backgroundColor-light: 28, 45, 135;
   --primary-color: 35, 100, 254;

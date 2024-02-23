@@ -1,0 +1,16 @@
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 20px 40px;
+  border: 1px outset rgb(var(--primary-color));
+  border-radius: 10px;
+  background-color: rgba(var(--primary-color), .3);
+  font-size: 1rem;
+}
+
+.card:hover {
+  border-style: inset;
+  background-color: rgb(var(--primary-color));
+}

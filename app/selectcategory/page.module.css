@@ -1,0 +1,35 @@
+.gameApp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.categoriesContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  width: 100%;
+  max-width: 1200px;
+}
+
+@media (width > 576px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(4, 25%);
+  }
+}
+
+@media (width > 768px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(5, 20%);
+  }
+}
+
+@media (width > 1200px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(5, 20%);
+  }
+}
