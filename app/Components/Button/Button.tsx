@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import styles from "./Button.module.css"
 
-export default function Button({ width, children }: { width: number, children: React.ReactNode }) {
+interface ButtonProps extends PropsWithChildren {
+  width: number;
+  classStyle?: string;
+};
+
+export default function Button({ width, classStyle = "", children }: ButtonProps) {
   return (
-    <div style={{height:`${width}px`, width:`${width}px`}} className={styles.container}>{ children }</div>
+    <div style={{height:`${width}px`, width:`${width}px`}} className={`${styles.container} ${classStyle}`}>{ children }</div>
   )
 }

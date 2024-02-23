@@ -2,7 +2,12 @@
 import React from 'react';
 import styles from "./CategoryCard.module.css";
 
-export default function CategoryCard({ item, content }:{ item: string, content: string[] }) {
+interface CategoryCardProps {
+  item: string;
+  content: string[];
+};
+
+export default function CategoryCard({ item, content }: CategoryCardProps) {
 
   const click = () => {
     console.log(content);

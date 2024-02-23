@@ -35,9 +35,11 @@ export default async function page() {
 
   return (
     <div className={styles.container}>
-      <p>
-        <Link href="/"><Button width={30}><IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} /></Button></Link>
-      </p>
+      <Link href="/">
+        <Button width={30} classStyle={styles.backButton}>
+          <IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} />
+        </Button>
+      </Link>
       <section className={styles.gameApp}>
         <Title name="Choisissez une catégorie" />
         <div className={styles.categoriesContainer}>

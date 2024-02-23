@@ -6,11 +6,15 @@ import { IoCaretForward } from "react-icons/io5";
 
 export default function Home() {
   return (
-    <main className={styles.container}>
-      <div className={styles.card}>
+    <main className={ styles.container }>
+      <div className={ styles.card }>
         <Title name="Le jeu du Pendu" />
-        <Link href="/selectcategory"><Button width={50}><IoCaretForward style={{width: "2rem", height: "2rem"}} /></Button></Link>
-        <Link href="/howtoplay" className={styles.howToPlay}>Comment jouer</Link>
+        <Link href="/selectcategory">
+          <Button width={50}>
+            <IoCaretForward style={{ width: "2rem", height: "2rem" }} />
+          </Button>
+        </Link>
+        <Link href="/howtoplay" className={ styles.howToPlay }>Comment jouer</Link>
       </div>
     </main>
   );
