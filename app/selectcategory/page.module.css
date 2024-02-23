@@ -5,10 +5,6 @@
   justify-content: center;
 }
 
-.title {
-  text-align: center;
-}
-
 .categoriesContainer {
   display: grid;
   grid-template-columns: repeat(2, 50%);

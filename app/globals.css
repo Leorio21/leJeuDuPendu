@@ -5,9 +5,13 @@
   --large: 1200px;
   
   /* colors */
-  --backgroundColor-dark: 32, 8, 78;
-  --backgroundColor-light: 28, 45, 135;
   --primary-color: 35, 100, 254;
+
+  --background-color--dark: 32, 8, 78;
+  --background-color--light: 28, 45, 135;
+
+  --button-color--light: 255, 122, 255;
+  --button-color--dark: 131, 119, 227;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,8 +37,8 @@ body {
   font-family: var(--font--lato);
   background: linear-gradient(
       to top,
-      rgb(var(--backgroundColor-dark)),
-      rgb(var(--backgroundColor-light))
+      rgb(var(--background-color--dark)),
+      rgb(var(--background-color--light))
     );
 }
 
