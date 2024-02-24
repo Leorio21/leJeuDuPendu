@@ -6,12 +6,15 @@
   
   /* colors */
   --primary-color: 35, 100, 254;
+  --secondary-color: 255, 255, 255;
 
   --background-color--dark: 32, 8, 78;
   --background-color--light: 28, 45, 135;
 
   --button-color--light: 255, 122, 255;
   --button-color--dark: 131, 119, 227;
+
+  --border-radius: 5px;
 }
 
 @media (prefers-color-scheme: dark) {

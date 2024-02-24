@@ -2,11 +2,12 @@ import React, { PropsWithChildren } from 'react';
 import classNames from "classnames/bind";
 import styles from "./Button.module.css"
 
-const cx = classNames.bind(styles);
 interface ButtonProps extends PropsWithChildren {
   width: number;
   back?: boolean;
 };
+
+const cx = classNames.bind(styles);
 
 export default function Button({ width, back = false, children }: ButtonProps) {
   return (

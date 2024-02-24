@@ -1,5 +1,6 @@
 import UseSecretWord from '@/app/Hooks/UseSecretWord'
 import React from 'react'
+import Keyboard from '../Keyboard/Keyboard';
 
 interface PlayProps {
   secretWord: string;
@@ -8,7 +9,10 @@ interface PlayProps {
 function Play({secretWord}: PlayProps) {
 
   return (
-    <div>Play {secretWord}</div>
+    <>
+      <div>Play {secretWord}</div>
+      <Keyboard />
+    </>
   )
 }
 

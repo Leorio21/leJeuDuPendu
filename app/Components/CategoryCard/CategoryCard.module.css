@@ -5,7 +5,7 @@
   margin: 10px;
   padding: 20px 40px;
   border: 1px outset rgb(var(--primary-color));
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   background-color: rgba(var(--primary-color), .3);
   font-size: 1rem;
 }

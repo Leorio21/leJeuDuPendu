@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(9, 11.11%);
+  width: 100%;
+  max-width: 1200px;
+}
