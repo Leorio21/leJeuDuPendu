@@ -28,23 +28,19 @@
 
 html,
 body {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
   height: 100dvh;
   width: 100%;
   overflow-x: hidden;
-  padding: 30px 0px;
 }
 
 body {
-  font-family: var(--font--lato);
+  padding: 30px 0px;
   background: linear-gradient(
-      to top,
-      rgb(var(--background-color--dark)),
-      rgb(var(--background-color--light))
+    to top,
+    rgb(var(--background-color--dark)),
+    rgb(var(--background-color--light))
     );
+  font-family: var(--font--lato);
 }
 
 h1, h2, h3, h4, h5, h6 {

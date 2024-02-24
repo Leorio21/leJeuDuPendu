@@ -1,33 +1,23 @@
 import React from "react";
-import { promises as fs } from "fs";
 import Link from "next/link";
-import styles from "./page.module.css";
+import styles from "./Selectcategory.module.css";
 import classNames from "classnames";
-import CategoryCard from "../Components/CategoryCard/CategoryCard";
-import Title from "../Components/Title/Title";
+import CategoryCard from "../CategoryCard/CategoryCard";
+import Title from "../Title/Title";
 import { IoArrowUndoSharp } from "react-icons/io5";
-import Button from "../Components/Button/Button";
+import Button from "../Button/Button";
+import categoriesJson from "../../../public/data.json"
 
-interface Result {
+interface CategoriesData {
   [key: string]: string[];
 }
 
-export const getData = async (): Promise<Result> => {
-  let fileContent: string = "";
-  let result: Result = {};
-  try {
-    fileContent = await fs.readFile(
-      process.cwd() + "/public/data.json", "utf-8"
-    );
-    result = JSON.parse(fileContent);
-  } catch {
-    result = {Error: ["Une erreur est survenue"]};
-  }
-  return result;
-};
+interface SelectcategoryProps{
+  onClick: (words: string[]) => void;
+}
 
-export default async function page() {
-  const categoriesFetched: Result = await getData();
+export default async function Selectcategory({onClick}: SelectcategoryProps) {
+  const categoriesFetched: CategoriesData = categoriesJson;
   const categories:string[] = [];
 
   for (const categorie in categoriesFetched) {
@@ -49,6 +39,7 @@ export default async function page() {
               key={categorie}
               item={categorie}
               content={categoriesFetched[categorie]}
+              onClick={onClick}
             />
           ))}
         </div>

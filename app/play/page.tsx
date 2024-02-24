@@ -1,7 +1,21 @@
-import React from 'react'
+"use client";
+import React from 'react';
+import Selectcategory from '../Components/Selectcategory/Selectcategory';
+import UseSecretWord from '../Hooks/UseSecretWord';
+import Play from '../Components/Play/Play';
 
-export default function pages() {
+export default function Pages() {
+
+  const { secretWord, selectWord } = UseSecretWord();
+
+
+  if (secretWord) {
+    return (
+      <div><Play secretWord={secretWord} /></div>
+    )
+  }
+
   return (
-    <div>Play</div>
+    <Selectcategory onClick={selectWord}/>
   )
 }

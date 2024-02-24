@@ -10,7 +10,7 @@ export default function Home() {
     <main className={classNames(styles.container)}>
       <div className={classNames(styles.card)}>
         <Title name="Le jeu du Pendu" />
-        <Link href="/selectcategory">
+        <Link href="/play">
           <Button width={50}>
             <IoCaretForward style={{ width: "2rem", height: "2rem" }} />
           </Button>
