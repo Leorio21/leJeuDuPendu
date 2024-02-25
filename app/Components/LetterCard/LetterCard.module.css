@@ -19,7 +19,11 @@
   color: rgb(var(--secondary-color));
 }
 
-.disabled {
+.card:focus {
+  outline: 3px solid rgb(255,0,0);
+}
+
+.disabled, .disabled:hover {
   pointer-events: none;
   background: rgba(var(--secondary-color), .3);
 }

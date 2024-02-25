@@ -4,20 +4,31 @@ import classNames from "classNames";
 
 interface LetterCardProps {
   letter: string;
+  tabIndex: number;
 }
 
-function LetterCard({letter}: LetterCardProps) {
+function LetterCard({ letter, tabIndex }: LetterCardProps) {
 
   const letterRef = useRef<HTMLParagraphElement>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleClick = () => {
+    if (isDisabled)
+      return;
     if (letterRef !== null) {
       letterRef.current!.classList.add(styles.disabled);
+      setIsDisabled(true);
+    }
+  }
+
+  const onKeyDownHandler = (event: any) => {
+    if (event.key === " " || event.key === "Enter") {
+      handleClick();
     }
   }
 
   return (
-    <p className={classNames(styles.card)} onClick={() => handleClick()} ref={letterRef}>{letter}</p>
+    <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex + 1} onClick={() => handleClick()} ref={letterRef}>{letter}</div>
   )
 }
 
