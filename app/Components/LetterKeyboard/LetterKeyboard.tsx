@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styles from "./LetterKeyboard.module.css";
-import classNames from "classNames";
+import classNames from "classnames";
 
 interface LetterCardProps {
   letter: string;

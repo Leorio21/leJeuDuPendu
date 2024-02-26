@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Play.module.css";
 import classNames from "classnames";
 import LetterKeyboard from "../LetterKeyboard/LetterKeyboard";
+import Button from "../Button/Button";
+import { IoArrowUndoSharp } from "react-icons/io5";
 
 interface PlayProps {
   secretWord: string;
@@ -40,6 +42,9 @@ function Play({ secretWord }: PlayProps) {
 
   return (
     <>
+    {/* <Button width={30} href="/play" positionAbsolute={true}>
+      <IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} />
+    </Button> */}
     <div className={styles.word}>
       {lettersToDisplay.split(" ").map((el, index) => <div className={styles.wordBlock} key={index}>{el.split("").map((letter, index) => <p key={index}>{letter}</p>)}</div>)}
     </div>
