@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import styles from "./Selectcategory.module.css";
 import classNames from "classnames";
 import CategoryCard from "../CategoryCard/CategoryCard";
@@ -26,11 +25,9 @@ export default async function Selectcategory({onClick}: SelectcategoryProps) {
 
   return (
     <div className={classNames(styles.container)}>
-      <Link href="/">
-        <Button width={30} back={true}>
-          <IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} />
-        </Button>
-      </Link>
+      <Button width={30} href="/" positionAbsolute={true}>
+        <IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} />
+      </Button>
       <section className={classNames(styles.gameApp)}>
         <Title name="Choisissez une catégorie" />
         <div className={classNames(styles.categoriesContainer)}>
