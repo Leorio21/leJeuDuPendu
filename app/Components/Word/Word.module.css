@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-@media (width > 568px) {
+@media (width > 576px) {
   .wordBlock {
     gap: 5px;
   }

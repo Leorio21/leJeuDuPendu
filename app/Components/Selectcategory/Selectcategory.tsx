@@ -12,10 +12,10 @@ interface CategoriesData {
 }
 
 interface SelectcategoryProps{
-  onClick: (words: string[]) => void;
+  selectedCategory: (words: string[]) => void;
 }
 
-export default async function Selectcategory({onClick}: SelectcategoryProps) {
+export default function Selectcategory({selectedCategory}: SelectcategoryProps) {
   const categoriesFetched: CategoriesData = categoriesJson;
   const categories:string[] = [];
 
@@ -36,7 +36,7 @@ export default async function Selectcategory({onClick}: SelectcategoryProps) {
               key={categorie}
               item={categorie}
               content={categoriesFetched[categorie]}
-              onClick={onClick}
+              selectedCategory={selectedCategory}
             />
           ))}
         </div>

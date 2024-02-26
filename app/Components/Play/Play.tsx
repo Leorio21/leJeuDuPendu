@@ -9,9 +9,10 @@ import Word from "../Word/Word";
 
 interface PlayProps {
   secretWord: string;
+  selectWord: () => void;
 }
 
-function Play({ secretWord }: PlayProps) {
+function Play({ secretWord, selectWord }: PlayProps) {
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.split("").map((letter) => letter.match(/[^A-Z]/g) ? letter : "_").join(""));
@@ -21,6 +22,7 @@ function Play({ secretWord }: PlayProps) {
       return;
     }
     console.log("You Win");
+    selectWord();
   }
 
   const verifLetter = (letter: string) => {
@@ -38,6 +40,10 @@ function Play({ secretWord }: PlayProps) {
   }
 
   useEffect(() => {
+    setLettersToDisplay(secretWord.split("").map((letter) => letter.match(/[^A-Z]/g) ? letter : "_").join(""));
+  }, [secretWord])
+
+  useEffect(() => {
     isWin();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lettersToDisplay]);
@@ -50,7 +56,7 @@ function Play({ secretWord }: PlayProps) {
         </div>
         <div className={classNames(styles.container)}>
           {LETTERS.split("").map((letter) => (
-            <LetterKeyboard key={letter} letter={letter} tabIndex={0} verifLetter={verifLetter}/>
+            <LetterKeyboard key={letter} letter={letter} secretWord={secretWord} tabIndex={0} verifLetter={verifLetter}/>
           ))}
         </div>
       </div>

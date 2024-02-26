@@ -1,21 +1,25 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import Selectcategory from '../Components/Selectcategory/Selectcategory';
 import UseSecretWord from '../Hooks/UseSecretWord';
 import Play from '../Components/Play/Play';
 
 export default function Pages() {
 
-  const { secretWord, selectWord } = UseSecretWord();
+  const { secretWord, words, selectWord, selectedCategory } = UseSecretWord();
 
+  useEffect(() => {
+    selectWord();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [words])
 
   if (secretWord) {
     return (
-      <div><Play secretWord={secretWord} /></div>
+      <div><Play secretWord={secretWord} selectWord={selectWord} /></div>
     )
   }
 
   return (
-    <Selectcategory onClick={selectWord}/>
+    <Selectcategory selectedCategory={selectedCategory}/>
   )
 }
