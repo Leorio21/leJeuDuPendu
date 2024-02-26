@@ -13,13 +13,12 @@ const cx = classNames.bind(styles);
 
 export default function Button({ width, href, positionAbsolute = false, children }: ButtonProps) {
   return (
-    <Link href={href}>
-      <div
-        style={{height:`${width}px`, width:`${width}px`}}
-        className={cx({container: true, positionAbsolute: positionAbsolute})}
+    <Link
+      href={href}
+      style={{height:`${width}px`, width:`${width}px`}}
+      className={cx({container: true, positionAbsolute: positionAbsolute})}
       >
         { children }
-      </div>
     </Link>
   )
 }

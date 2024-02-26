@@ -30,7 +30,7 @@ function LetterKeyboard({ letter, tabIndex, verifLetter }: LetterCardProps) {
   }
 
   return (
-    <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex + 1} onClick={() => handleClick()} ref={letterRef}>{letter}</div>
+    <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex} onClick={() => handleClick()} ref={letterRef}>{letter}</div>
   )
 }
 

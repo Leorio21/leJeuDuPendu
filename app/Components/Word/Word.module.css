@@ -1,0 +1,13 @@
+.wordBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+}
+
+@media (width > 568px) {
+  .wordBlock {
+    gap: 5px;
+  }
+}
