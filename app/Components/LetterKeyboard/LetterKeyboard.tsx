@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
-import styles from "./LetterCard.module.css";
+import styles from "./LetterKeyboard.module.css";
 import classNames from "classNames";
 
 interface LetterCardProps {
   letter: string;
   tabIndex: number;
+  verifLetter: (letter: string) => void 
 }
 
-function LetterCard({ letter, tabIndex }: LetterCardProps) {
+function LetterKeyboard({ letter, tabIndex, verifLetter }: LetterCardProps) {
 
   const letterRef = useRef<HTMLParagraphElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -18,6 +19,7 @@ function LetterCard({ letter, tabIndex }: LetterCardProps) {
     if (letterRef !== null) {
       letterRef.current!.classList.add(styles.disabled);
       setIsDisabled(true);
+      verifLetter(letter);
     }
   }
 
@@ -32,4 +34,4 @@ function LetterCard({ letter, tabIndex }: LetterCardProps) {
   )
 }
 
-export default LetterCard
+export default LetterKeyboard;

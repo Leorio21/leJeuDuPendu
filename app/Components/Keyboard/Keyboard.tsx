@@ -1,19 +1,20 @@
-import React from 'react';
+import React from "react";
 import styles from "./Keyboard.module.css";
 import classNames from "classnames";
-import LetterCard from '../LetterCard/LetterCard';
+import LetterCard from "../LetterKeyboard/LetterKeyboard";
 
 function Keyboard() {
-
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   return (
     <div className={classNames(styles.wrapper)}>
       <div className={classNames(styles.container)}>
-        {LETTERS.split("").map((letter) => <LetterCard key={letter} letter={letter} />)}
+        {LETTERS.split("").map((letter) => (
+          <LetterCard key={letter} letter={letter} />
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default Keyboard
+export default Keyboard;
