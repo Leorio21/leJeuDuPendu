@@ -2,32 +2,32 @@
 import { useState } from "react";
 
 export default function UseSecretWord() {
-  const [secretWord, setSecretWord] = useState<string | null>(null);
-  const [words, setWords] = useState<string[] | null>(null);
+  const [value, setValue] = useState<string | null>(null);
+  const [dictionary, setDictionary] = useState<string[] | null>(null);
 
   const randomNumber = (min: number, max: number) => {
 		return Math.floor(Math.random() * (max - min)) + min;
 	};
 
-  const selectedCategory = (words: string[]) => {
-    setWords(words);
+  const newDictionary = (words: string[]) => {
+    setDictionary(words);
   }
 
-  const resetSecretWord = () => {
-    setSecretWord(null);
-    setWords(null);
+  const reset = () => {
+    setValue(null);
+    setDictionary(null);
   }
 
-  const selectWord = () => {
-    if (words === null || words.length <= 0) {
+  const pick = () => {
+    if (dictionary === null || dictionary.length <= 0) {
       alert("Catégorie vide ou inconnue");
       return;
     }
-      const wordIndex = randomNumber(0, words.length - 1);
-      setSecretWord(words[wordIndex]);
+    const wordIndex = randomNumber(0, dictionary.length - 1);
+    setValue(dictionary[wordIndex]);
   }
 
-  return { secretWord, words, resetSecretWord, selectWord, selectedCategory };
+  return { value, dictionary, reset, pick, newDictionary };
 
 
 }

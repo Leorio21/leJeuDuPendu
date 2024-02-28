@@ -6,12 +6,12 @@ import classNames from "classnames";
 interface CategoryCardProps {
   item: string;
   content: string[];
-  selectedCategory: (words: string[]) => void;
+  changeDictionary: (words: string[]) => void;
 };
 
-export default function CategoryCard({ item, content, selectedCategory }: CategoryCardProps) {
+export default function CategoryCard({ item, content, changeDictionary }: CategoryCardProps) {
 
   return (
-    <p className={classNames(styles.card)} onClick={() => selectedCategory(content)}>{item}</p>
+    <p className={classNames(styles.card)} onClick={() => changeDictionary(content)}>{item}</p>
   )
 }

@@ -9,16 +9,20 @@ import Title from "../Title/Title";
 import { GameState } from "@/app/enum/enum";
 
 interface PlayProps {
-  secretWord: string;
-  resetSecretWord: () => void;
-  selectWord: () => void;
+  secretWord: {
+    value: string | null;
+    dictionary: string[] | null;
+    reset: () => void;
+    pick: () => void;
+    newDictionary: (words: string[]) => void;
+  }
 }
 
-function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
+function Play({ secretWord }: PlayProps) {
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const dialog = document.querySelector("dialog");
 
-  const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.split("").map((letter) => letter.match(/[^A-Z]/g) ? letter : "_").join(""));
+  const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.value!.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
   const [gameState, setGameState] = useState<GameState>(GameState.PENDING);
 
   const isWin = () => {
@@ -30,17 +34,17 @@ function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
   }
 
   const nextWord = () => {
-    selectWord();
+    secretWord.pick();
     dialog?.close();
     setGameState(GameState.PENDING);
   }
 
   const verifLetter = (letter: string) => {
-    if (secretWord.includes(letter)) {
+    if (secretWord.value!.includes(letter)) {
       setLettersToDisplay((prev) => {
         const newValue = prev.split("");
-        for (let i = 0; i < secretWord.length; i++) {
-          if (secretWord[i] === letter) {
+        for (let i = 0; i < secretWord.value!.length; i++) {
+          if (secretWord.value![i] === letter) {
             newValue[i] = letter;
           }
         }
@@ -50,7 +54,7 @@ function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
   }
 
   useEffect(() => {
-    setLettersToDisplay(secretWord.split("").map((letter) => letter.match(/[^A-Z]/g) ? letter : "_").join(""));
+    setLettersToDisplay(secretWord.value!.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, secretWord]);
 
@@ -65,7 +69,7 @@ function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
       <div className={classNames(styles.dialogContent)}>
         <Title name="Vous avez gagné" />
         <Button width={200} onClick={nextWord}>Continuer</Button>
-        <Button width={200} onClick={resetSecretWord} href="/play">Nouvelle catégorie</Button>
+        <Button width={200} onClick={secretWord.reset} href="/play">Nouvelle catégorie</Button>
         <Button width={200} color="gradient" href="/">Quitter</Button>
       </div>
     </dialog>

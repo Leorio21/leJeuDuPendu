@@ -12,10 +12,10 @@ interface CategoriesData {
 }
 
 interface SelectcategoryProps{
-  selectedCategory: (words: string[]) => void;
+  changeDictionary: (words: string[]) => void;
 }
 
-export default function Selectcategory({selectedCategory}: SelectcategoryProps) {
+export default function Selectcategory({changeDictionary}: SelectcategoryProps) {
   const categoriesFetched: CategoriesData = categoriesJson;
   const categories:string[] = [];
 
@@ -36,7 +36,7 @@ export default function Selectcategory({selectedCategory}: SelectcategoryProps) 
               key={categorie}
               item={categorie}
               content={categoriesFetched[categorie]}
-              selectedCategory={selectedCategory}
+              changeDictionary={changeDictionary}
             />
           ))}
         </div>

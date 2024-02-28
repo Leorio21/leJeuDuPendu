@@ -6,22 +6,22 @@ import Play from '../Components/Play/Play';
 
 export default function Pages() {
 
-  const { secretWord, words, resetSecretWord, selectWord, selectedCategory } = UseSecretWord();
+  const secretWord = UseSecretWord();
 
   useEffect(() => {
-    if (words) {
-      selectWord();
+    if (secretWord.dictionary) {
+      secretWord.pick();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [words])
+  }, [secretWord.dictionary])
 
-  if (secretWord) {
+  if (secretWord.value) {
     return (
-      <Play secretWord={secretWord} resetSecretWord={resetSecretWord} selectWord={selectWord} />
+      <Play secretWord={secretWord} />
     )
   }
 
   return (
-    <Selectcategory selectedCategory={selectedCategory}/>
+    <Selectcategory changeDictionary={secretWord.newDictionary}/>
   )
 }
