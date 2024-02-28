@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from "./LetterKeyboard.module.css";
 import classNames from "classnames";
+import { GameState } from '@/app/enum/enum';
 
 interface LetterCardProps {
   letter: string;
   tabIndex: number;
-  gameIsWin: boolean;
+  gameState: GameState;
   verifLetter: (letter: string) => void 
 }
 
-function LetterKeyboard({ letter, tabIndex, gameIsWin, verifLetter }: LetterCardProps) {
+function LetterKeyboard({ letter, tabIndex, gameState, verifLetter }: LetterCardProps) {
 
   const letterRef = useRef<HTMLParagraphElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -31,9 +32,12 @@ function LetterKeyboard({ letter, tabIndex, gameIsWin, verifLetter }: LetterCard
   }
 
   useEffect(() => {
-    setIsDisabled(false);
-    letterRef.current!.classList.remove(styles.disabled);
-  }, [gameIsWin]);
+    if (isDisabled) {
+      setIsDisabled(false);
+      letterRef.current!.classList.remove(styles.disabled);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState]);
 
   return (
     <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex} onClick={() => handleClick()} ref={letterRef}>{letter}</div>

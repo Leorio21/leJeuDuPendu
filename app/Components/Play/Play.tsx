@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 import { IoArrowUndoSharp } from "react-icons/io5";
 import Word from "../Word/Word";
 import Title from "../Title/Title";
+import { GameState } from "@/app/enum/enum";
 
 interface PlayProps {
   secretWord: string;
@@ -18,20 +19,20 @@ function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
   const dialog = document.querySelector("dialog");
 
   const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.split("").map((letter) => letter.match(/[^A-Z]/g) ? letter : "_").join(""));
-  const [gameIsWin, setGameIsWin] = useState<boolean>(false);
+  const [gameState, setGameState] = useState<GameState>(GameState.PENDING);
 
   const isWin = () => {
     if (lettersToDisplay.includes("_")) {
       return;
     }
     dialog?.showModal();
-    setGameIsWin(true);
+    setGameState(GameState.WON);
   }
 
   const nextWord = () => {
     selectWord();
     dialog?.close();
-    setGameIsWin(false);
+    setGameState(GameState.PENDING);
   }
 
   const verifLetter = (letter: string) => {
@@ -51,7 +52,7 @@ function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
   useEffect(() => {
     setLettersToDisplay(secretWord.split("").map((letter) => letter.match(/[^A-Z]/g) ? letter : "_").join(""));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameIsWin, secretWord])
+  }, [gameState, secretWord]);
 
   useEffect(() => {
     isWin();
@@ -74,7 +75,7 @@ function Play({ secretWord, resetSecretWord, selectWord }: PlayProps) {
         </div>
         <div className={classNames(styles.container)}>
           {LETTERS.split("").map((letter) => (
-            <LetterKeyboard key={letter} letter={letter} gameIsWin={gameIsWin} tabIndex={0} verifLetter={verifLetter}/>
+            <LetterKeyboard key={letter} letter={letter} gameState={gameState} tabIndex={0} verifLetter={verifLetter}/>
           ))}
         </div>
       </div>
