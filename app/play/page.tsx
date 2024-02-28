@@ -9,7 +9,9 @@ export default function Pages() {
   const { secretWord, words, resetSecretWord, selectWord, selectedCategory } = UseSecretWord();
 
   useEffect(() => {
-    selectWord();
+    if (words) {
+      selectWord();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [words])
 

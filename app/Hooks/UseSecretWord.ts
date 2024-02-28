@@ -19,8 +19,8 @@ export default function UseSecretWord() {
   }
 
   const selectWord = () => {
-    if (words === null || words.length === 0) {
-      alert("Catégorie vide ou inconnue")
+    if (words === null || words.length <= 0) {
+      alert(`Catégorie vide ou inconnue`)
       return;
     }
       const wordIndex = randomNumber(0, words.length - 1);
