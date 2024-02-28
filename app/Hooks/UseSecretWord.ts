@@ -15,7 +15,7 @@ export default function UseSecretWord() {
 
   const resetSecretWord = () => {
     setSecretWord(null);
-    setWords([]);
+    setWords(null);
   }
 
   const selectWord = () => {
