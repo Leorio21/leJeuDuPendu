@@ -6,7 +6,7 @@ import Play from '../Components/Play/Play';
 
 export default function Pages() {
 
-  const { secretWord, words, selectWord, selectedCategory } = UseSecretWord();
+  const { secretWord, words, resetSecretWord, selectWord, selectedCategory } = UseSecretWord();
 
   useEffect(() => {
     selectWord();
@@ -15,7 +15,7 @@ export default function Pages() {
 
   if (secretWord) {
     return (
-      <div><Play secretWord={secretWord} selectWord={selectWord} /></div>
+      <Play secretWord={secretWord} resetSecretWord={resetSecretWord} selectWord={selectWord} />
     )
   }
 

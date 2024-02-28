@@ -2,16 +2,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(
-      to top,
-      rgb(var(--button-color--light)),
-      rgb(var(--button-color--dark))
-    );
+  border-radius: var(--border-radius);
+  background: rgb(var(--primary-color));
 }
 
 .positionAbsolute {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.backgroundGradient {
+  background: linear-gradient(
+      to top,
+      rgb(var(--button-color--light)),
+      rgb(var(--button-color--dark))
+    );
 }

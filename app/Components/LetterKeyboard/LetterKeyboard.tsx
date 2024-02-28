@@ -5,11 +5,11 @@ import classNames from "classnames";
 interface LetterCardProps {
   letter: string;
   tabIndex: number;
-  secretWord: string;
+  gameIsWin: boolean;
   verifLetter: (letter: string) => void 
 }
 
-function LetterKeyboard({ letter, tabIndex, secretWord, verifLetter }: LetterCardProps) {
+function LetterKeyboard({ letter, tabIndex, gameIsWin, verifLetter }: LetterCardProps) {
 
   const letterRef = useRef<HTMLParagraphElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -33,7 +33,7 @@ function LetterKeyboard({ letter, tabIndex, secretWord, verifLetter }: LetterCar
   useEffect(() => {
     setIsDisabled(false);
     letterRef.current!.classList.remove(styles.disabled);
-  }, [secretWord]);
+  }, [gameIsWin]);
 
   return (
     <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex} onClick={() => handleClick()} ref={letterRef}>{letter}</div>
