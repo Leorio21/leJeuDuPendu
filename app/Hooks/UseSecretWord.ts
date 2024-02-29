@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 export default function UseSecretWord() {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string>("");
   const [dictionary, setDictionary] = useState<string[] | null>(null);
 
   const randomNumber = (min: number, max: number) => {
@@ -14,7 +14,7 @@ export default function UseSecretWord() {
   }
 
   const reset = () => {
-    setValue(null);
+    setValue("");
     setDictionary(null);
   }
 

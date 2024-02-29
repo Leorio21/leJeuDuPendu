@@ -15,7 +15,7 @@ export default function Pages() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [secretWord.dictionary])
 
-  if (secretWord.value) {
+  if (secretWord.value !== "") {
     return (
       <Play secretWord={secretWord} />
     )
