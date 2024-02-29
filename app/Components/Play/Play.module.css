@@ -7,6 +7,15 @@
   width: 100%;
 }
 
+.headContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(9, 11.11%);

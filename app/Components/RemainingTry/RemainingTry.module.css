@@ -1,0 +1,18 @@
+.remainingTryContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 50px);
+}
+
+.hearth path {
+  fill: rgb(var(--button-color--light));
+}
+
+.hearthE path {
+  fill: rgba(var(--button-color--light), .2);
+}
+
+@media (width > 768px) {
+  .remainingTryContainer {
+    grid-template-columns: repeat(8, 50px);
+  }
+}

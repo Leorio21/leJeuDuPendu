@@ -15,7 +15,7 @@ interface ButtonProps extends PropsWithChildren {
 
 const cx = classNames.bind(styles);
 
-export default function Button({ width = 30, height = 30, color = "blue", href = "#", onClick = undefined, positionAbsolute = false, children }: ButtonProps) {
+export default function Button({ width = 50, height = 50, color = "blue", href = "#", onClick = undefined, positionAbsolute = false, children }: ButtonProps) {
   return (
     <Link
       href={href}

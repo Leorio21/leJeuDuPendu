@@ -26,7 +26,7 @@ export default function Selectcategory({changeDictionary}: SelectcategoryProps) 
   return (
     <div className={classNames(styles.container)}>
       <Button href="/" color="gradient" positionAbsolute={true}>
-        <IoArrowUndoSharp style={{width: "1.2rem", height: "1.2rem"}} />
+        <IoArrowUndoSharp style={{ width: "2rem", height: "2rem" }} />
       </Button>
       <section className={classNames(styles.gameApp)}>
         <Title name="Choisissez une catégorie" />
