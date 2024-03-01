@@ -13,6 +13,7 @@
 
   --button-color--light: 255, 122, 255;
   --button-color--dark: 131, 119, 227;
+  --button-color--disabled: 149, 149, 149;
 
   --border-radius: 10px;
 }

@@ -7,7 +7,7 @@
   fill: rgb(var(--button-color--light));
 }
 
-.hearthE path {
+.hearthEmpty path {
   fill: rgba(var(--button-color--light), .2);
 }
 

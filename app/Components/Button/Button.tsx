@@ -10,17 +10,18 @@ interface ButtonProps extends PropsWithChildren {
   color?: "blue" | "gradient";
   href?: Urls;
   onClick? : (() => void) | undefined;
+  disabled?: boolean;
   positionAbsolute?: boolean;
 };
 
 const cx = classNames.bind(styles);
 
-export default function Button({ width = 50, height = 50, color = "blue", href = "#", onClick = undefined, positionAbsolute = false, children }: ButtonProps) {
+export default function Button({ width = 50, height = 50, color = "blue", href = "#", onClick = undefined, disabled = false, positionAbsolute = false, children }: ButtonProps) {
   return (
     <Link
       href={href}
       style={{height:`${height}px`, width:`${width}px`}}
-      className={cx({container: true, positionAbsolute: positionAbsolute, backgroundGradient: color === "gradient" ,circle: width === height})}
+      className={cx({container: true, positionAbsolute: positionAbsolute, disabled: disabled, backgroundGradient: color === "gradient" ,circle: width === height})}
       onClick={onClick}
       >
         { children }

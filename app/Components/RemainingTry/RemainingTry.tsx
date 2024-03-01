@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import styles from "./RemainingTry.module.css";
 import classNames from "classnames";
-import { IoHeartSharp, IoHeartOutline } from "react-icons/io5";
+import { IoHeartSharp } from "react-icons/io5";
 
 interface RemainingTryProps {
   remainingTry : number;
@@ -17,11 +17,10 @@ function RemainingTry({remainingTry}: RemainingTryProps) {
       if (i < remainingTry) {
         newDisplay.push(<IoHeartSharp className={classNames(styles.hearth)} key={i} style={{ width: "50", height: "50" }} />)
       } else {
-        newDisplay.push(<IoHeartSharp className={classNames(styles.hearthE)} key={i} style={{ width: "50", height: "50" }} />)
+        newDisplay.push(<IoHeartSharp className={classNames(styles.hearthEmpty)} key={i} style={{ width: "50", height: "50" }} />)
       }
     }
     setDisplayRemainingTry(newDisplay);
-    console.log(newDisplay);
   }
 
   useEffect(()=> {

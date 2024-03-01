@@ -9,11 +9,11 @@ export default function Pages() {
   const secretWord = UseSecretWord();
 
   useEffect(() => {
-    if (secretWord.dictionary) {
+    if (secretWord.dictionary.length > 0) {
       secretWord.pick();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secretWord.dictionary])
+  }, [secretWord.isCategorieSelected])
 
   if (secretWord.value !== "") {
     return (

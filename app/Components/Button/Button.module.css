@@ -23,3 +23,8 @@
       rgb(var(--button-color--dark))
     );
 }
+
+.disabled {
+  pointer-events: none;
+  background: rgb(var(--button-color--disabled));
+}

@@ -2,20 +2,27 @@
 import { useState } from "react";
 
 export default function UseSecretWord() {
-  const [value, setValue] = useState<string>("");
-  const [dictionary, setDictionary] = useState<string[] | null>(null);
+  const [value, setValue] = useState("");
+  const [dictionary, setDictionary] = useState<string[]>([]);
+  const [isCategorieSelected, setIsCategorySelected] = useState(false)
 
   const randomNumber = (min: number, max: number) => {
 		return Math.floor(Math.random() * (max - min)) + min;
 	};
 
   const newDictionary = (words: string[]) => {
+    setIsCategorySelected(true);
     setDictionary(words);
+  }
+
+  const dictionaryRemoveSecretWord = (newSecret: string) => {
+    setDictionary((prev) => prev.filter((word) => word !== newSecret))
   }
 
   const reset = () => {
     setValue("");
-    setDictionary(null);
+    setDictionary([]);
+    setIsCategorySelected(false);
   }
 
   const pick = () => {
@@ -25,9 +32,10 @@ export default function UseSecretWord() {
     }
     const wordIndex = randomNumber(0, dictionary.length - 1);
     setValue(dictionary[wordIndex]);
+    dictionaryRemoveSecretWord(dictionary[wordIndex]);
   }
 
-  return { value, dictionary, reset, pick, newDictionary };
+  return { value, dictionary, isCategorieSelected, reset, pick, newDictionary };
 
 
 }

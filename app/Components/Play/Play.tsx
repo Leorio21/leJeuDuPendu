@@ -13,7 +13,7 @@ import RemainingTry from "../RemainingTry/RemainingTry";
 interface PlayProps {
   secretWord: {
     value: string;
-    dictionary: string[] | null;
+    dictionary: string[];
     reset: () => void;
     pick: () => void;
     newDictionary: (words: string[]) => void;
@@ -50,6 +50,7 @@ function Play({ secretWord }: PlayProps) {
   }
 
   const isGameWon = () => {
+    console.log(secretWord.dictionary.length, secretWord.dictionary)
     if (lettersToDisplay.includes("_")) {
       return;
     }
@@ -104,7 +105,7 @@ function Play({ secretWord }: PlayProps) {
           {gameState === GameState.LOST && <Answer secretWord={secretWord.value} />}
           {gameState === GameState.PENDING ?
             <Button width={200} onClick={closeOptionMenu}>Continuer</Button> :
-            <Button width={200} onClick={nextWord}>Rejouer</Button>}
+            <Button width={200} onClick={nextWord} disabled={secretWord.dictionary.length <= 0}>Rejouer</Button>}
           
           <Button width={200} onClick={secretWord.reset} href="/play">Nouvelle catégorie</Button>
           <Button width={200} color="gradient" href="/">Quitter</Button>

@@ -6,7 +6,7 @@
   height: 50px;
   border-radius: var(--border-radius);
   padding: 5px 5px;
-  background: rgba(var(--primary-color), .3);
+  background: rgba(var(--primary-color), .5);
   color: transparent;
   font-size: 1.3rem;
 }
