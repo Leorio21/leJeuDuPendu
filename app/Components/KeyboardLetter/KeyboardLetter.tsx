@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styles from "./LetterKeyboard.module.css";
+import styles from "./KeyboardLetter.module.css";
 import classNames from "classnames";
 import { GameState } from '@/app/enum/enum';
 
 interface LetterCardProps {
   letter: string;
   tabIndex: number;
-  gameState: GameState;
-  verifLetter: (letter: string) => void 
+  game: {
+    state: GameState;
+    verifLetter: (letter: string) => void;
+  }
 }
 
-function LetterKeyboard({ letter, tabIndex, gameState, verifLetter }: LetterCardProps) {
+function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
 
   const letterRef = useRef<HTMLParagraphElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -21,7 +23,7 @@ function LetterKeyboard({ letter, tabIndex, gameState, verifLetter }: LetterCard
     if (letterRef !== null) {
       letterRef.current!.classList.add(styles.disabled);
       setIsDisabled(true);
-      verifLetter(letter);
+      game.verifLetter(letter);
     }
   }
 
@@ -37,11 +39,11 @@ function LetterKeyboard({ letter, tabIndex, gameState, verifLetter }: LetterCard
       letterRef.current!.classList.remove(styles.disabled);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState]);
+  }, [game.state]);
 
   return (
     <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex} onClick={() => handleClick()} ref={letterRef}>{letter}</div>
   )
 }
 
-export default LetterKeyboard;
+export default KeyboardLetter;

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Play.module.css";
 import classNames from "classnames";
-import LetterKeyboard from "../LetterKeyboard/LetterKeyboard";
 import Button from "../Button/Button";
 import { IoMenu } from "react-icons/io5";
 import Word from "../Word/Word";
@@ -9,6 +8,7 @@ import Title from "../Title/Title";
 import { GameState } from "@/app/enum/enum";
 import Answer from "../Answer/Answer";
 import RemainingTry from "../RemainingTry/RemainingTry";
+import Keyboard from "../Keyboard/Keyboard";
 
 interface PlayProps {
   secretWord: {
@@ -119,11 +119,11 @@ function Play({ secretWord }: PlayProps) {
         <div className={styles.word}>
           {lettersToDisplay.split(" ").map((word, index) => <Word key={index} word={word} />)}
         </div>
-        <div className={classNames(styles.container)}>
-          {LETTERS.split("").map((letter) => (
-            <LetterKeyboard key={letter} letter={letter} gameState={gameState} tabIndex={0} verifLetter={verifLetter}/>
-          ))}
-        </div>
+        <Keyboard game={{
+          state: gameState,
+          verifLetter: verifLetter
+          }
+        } />
       </div>
     </>
   );
