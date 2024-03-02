@@ -6,6 +6,7 @@ import Title from "../Title/Title";
 import { IoArrowUndoSharp } from "react-icons/io5";
 import Button from "../Button/Button";
 import categoriesJson from "../../../public/data.json"
+import { useRouter } from "next/navigation";
 
 interface CategoriesData {
   [key: string]: string[];
@@ -18,6 +19,14 @@ interface SelectcategoryProps{
 export default function Selectcategory({changeDictionary}: SelectcategoryProps) {
   const categoriesFetched: CategoriesData = categoriesJson;
   const categories:string[] = [];
+
+  const router = useRouter()
+
+  const onKeyDownHandler = (event: any) => {
+    if (event.key === " " || event.key === "enter") {
+      router.replace(event.target.href)
+    }
+  }
 
   for (const categorie in categoriesFetched) {
     categories.push(categorie);

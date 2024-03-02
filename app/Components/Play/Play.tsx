@@ -50,7 +50,6 @@ function Play({ secretWord }: PlayProps) {
   }
 
   const isGameWon = () => {
-    console.log(secretWord.dictionary.length, secretWord.dictionary)
     if (lettersToDisplay.includes("_")) {
       return;
     }
