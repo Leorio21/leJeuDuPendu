@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function UseSecretWord() {
+export default function useSecretWord() {
   const [value, setValue] = useState("");
   const [dictionary, setDictionary] = useState<string[]>([]);
   const [isCategorieSelected, setIsCategorySelected] = useState(false)

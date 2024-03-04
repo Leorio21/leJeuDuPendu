@@ -7,6 +7,10 @@
   width: 100%;
 }
 
+.confetti {
+  display: none;
+}
+
 .headContainer {
   display: flex;
   align-items: center;

@@ -9,11 +9,14 @@ import { GameState } from "@/app/enum/enum";
 import Answer from "../Answer/Answer";
 import RemainingTry from "../RemainingTry/RemainingTry";
 import Keyboard from "../Keyboard/Keyboard";
+import useWindowSize from "@/app/Hooks/useWindowSize";
+import Confetti from 'react-confetti'
 
 interface PlayProps {
   secretWord: {
     value: string;
     dictionary: string[];
+    isCategorieSelected: boolean;
     reset: () => void;
     pick: () => void;
     newDictionary: (words: string[]) => void;
@@ -23,6 +26,9 @@ interface PlayProps {
 function Play({ secretWord }: PlayProps) {
   const MAXTRY = 8;
   const gameMessageRef = useRef<HTMLDialogElement>(null);
+  const confettiRef = useRef<HTMLDivElement>(null);
+
+  const { width, height } = useWindowSize();
 
   const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.value.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
   const [gameState, setGameState] = useState<GameState>(GameState.PENDING);
@@ -44,7 +50,7 @@ function Play({ secretWord }: PlayProps) {
   const isGameLost = () => {
     if (remainingTry <= 0) {
       setGameState(GameState.LOST);
-      gameMessageRef.current?.showModal();
+      openOptionMenu();
     }
   }
 
@@ -52,13 +58,17 @@ function Play({ secretWord }: PlayProps) {
     if (lettersToDisplay.includes("_")) {
       return;
     }
-    setGameState(GameState.WON);
-    gameMessageRef.current?.showModal();
+    confettiRef.current?.classList.remove(styles.confetti)
+    setTimeout(() => {
+      setGameState(GameState.WON);
+      openOptionMenu();
+    }, 2000);
   }
 
   const nextWord = () => {
     secretWord.pick();
     gameMessageRef.current?.close();
+    confettiRef.current?.classList.add(styles.confetti)
     setGameState(GameState.PENDING);
     setRemainingTry(MAXTRY);
   }
@@ -97,6 +107,12 @@ function Play({ secretWord }: PlayProps) {
 
   return (
     <>
+    <div className={classNames(styles.confetti)} ref={confettiRef}>
+      <Confetti
+        width={width}
+        height={height}
+      />
+    </div>
       <dialog ref={gameMessageRef}>
         <div className={classNames(styles.dialogContent)}>
           <Title name={gameMessage[gameState]} />

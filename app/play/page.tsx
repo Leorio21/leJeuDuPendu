@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect } from 'react';
 import Selectcategory from '../Components/Selectcategory/Selectcategory';
-import UseSecretWord from '../Hooks/UseSecretWord';
+import useSecretWord from '../Hooks/useSecretWord';
 import Play from '../Components/Play/Play';
 
 export default function Pages() {
 
-  const secretWord = UseSecretWord();
+  const secretWord = useSecretWord();
 
   useEffect(() => {
     if (secretWord.dictionary.length > 0) {
