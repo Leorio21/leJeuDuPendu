@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 5px;
+}
+
+.headContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.container p {
+  padding: 10px 0;
+}
+
+.screenPlayLegend {
+  padding-left: 40px;
+}

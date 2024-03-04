@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from 'react';
 import classNames from "classnames/bind";
 import styles from "./Button.module.css"
 import Link from 'next/link';
-import { Urls } from '@/app/type/urls';
+import { Urls } from '@/app/Types/urls';
 import { useRouter } from 'next/navigation';
 
 interface ButtonProps extends PropsWithChildren {
@@ -24,7 +24,7 @@ export default function Button({ width = 50, height = 50, color = "blue", href =
 
   const onKeyDownHandler = (event: any) => {
     if (event.key === " " || event.key === "enter") {
-      if (event.target.href.includes("#") && onClick !== undefined) {
+      if (event.target.href.includes("#") && onClick) {
         onClick();
       } else {
         router.replace(event.target.href)

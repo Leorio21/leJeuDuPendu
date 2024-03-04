@@ -21,31 +21,30 @@ interface PlayProps {
 }
 
 function Play({ secretWord }: PlayProps) {
-  const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const MAXTRY = 8;
-  const endGameMessageRef = useRef<HTMLDialogElement>(null);
+  const gameMessageRef = useRef<HTMLDialogElement>(null);
 
   const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.value.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
   const [gameState, setGameState] = useState<GameState>(GameState.PENDING);
   const [remainingTry, setRemainingTry] = useState<number>(MAXTRY);
-  const endGameMessage: {[key: number]: string} = {
+  const gameMessage: {[key: number]: string} = {
     [GameState.WON]: "Vous avez gagné",
     [GameState.LOST]: "Vous avez perdu",
     [GameState.PENDING]: "Options"
   }
 
   const openOptionMenu = () => {
-    endGameMessageRef.current?.showModal();
+    gameMessageRef.current?.showModal();
   }
 
   const closeOptionMenu = () => {
-    endGameMessageRef.current?.close();
+    gameMessageRef.current?.close();
   }
 
   const isGameLost = () => {
     if (remainingTry <= 0) {
       setGameState(GameState.LOST);
-      endGameMessageRef.current?.showModal();
+      gameMessageRef.current?.showModal();
     }
   }
 
@@ -54,12 +53,12 @@ function Play({ secretWord }: PlayProps) {
       return;
     }
     setGameState(GameState.WON);
-    endGameMessageRef.current?.showModal();
+    gameMessageRef.current?.showModal();
   }
 
   const nextWord = () => {
     secretWord.pick();
-    endGameMessageRef.current?.close();
+    gameMessageRef.current?.close();
     setGameState(GameState.PENDING);
     setRemainingTry(MAXTRY);
   }
@@ -84,7 +83,7 @@ function Play({ secretWord }: PlayProps) {
   useEffect(() => {
     setLettersToDisplay(secretWord.value.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState, secretWord.value]);
+  }, [secretWord.value]);
 
   useEffect(() => {
     isGameWon();
@@ -98,15 +97,15 @@ function Play({ secretWord }: PlayProps) {
 
   return (
     <>
-      <dialog ref={endGameMessageRef}>
+      <dialog ref={gameMessageRef}>
         <div className={classNames(styles.dialogContent)}>
-          <Title name={endGameMessage[gameState]} />
+          <Title name={gameMessage[gameState]} />
           {gameState === GameState.LOST && <Answer secretWord={secretWord.value} />}
           {gameState === GameState.PENDING ?
             <Button width={200} onClick={closeOptionMenu}>Continuer</Button> :
             <Button width={200} onClick={nextWord} disabled={secretWord.dictionary.length <= 0}>Rejouer</Button>}
           
-          <Button width={200} onClick={secretWord.reset} href="/play">Nouvelle catégorie</Button>
+          <Button width={200} onClick={secretWord.reset} >Nouvelle catégorie</Button>
           <Button width={200} color="gradient" href="/">Quitter</Button>
         </div>
       </dialog>

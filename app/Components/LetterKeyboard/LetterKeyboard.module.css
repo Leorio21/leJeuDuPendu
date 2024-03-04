@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  background: rgb(var(--secondary-color));
+  color: rgb(var(--background-color--dark));
+  font-size: 1.3rem;
+}
+
+.card:hover, .card:focus {
+  background: linear-gradient(
+    to top,
+    rgb(var(--button-color--dark)),
+    rgb(var(--button-color--light))
+  );
+  color: rgb(var(--secondary-color));
+}
+
+.disabled, .disabled:hover, .disabled:focus {
+  pointer-events: none;
+  background: rgba(var(--secondary-color), .3);
+  color: rgb(var(--background-color--dark));
+}

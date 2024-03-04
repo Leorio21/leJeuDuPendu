@@ -15,13 +15,13 @@ export default function Pages() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [secretWord.isCategorieSelected])
 
-  if (secretWord.value !== "") {
+  if (secretWord.value === "") {
+    return (
+        <Selectcategory changeDictionary={secretWord.newDictionary}/>
+      )
+    }
+    
     return (
       <Play secretWord={secretWord} />
-    )
-  }
-
-  return (
-    <Selectcategory changeDictionary={secretWord.newDictionary}/>
   )
 }
