@@ -27,8 +27,6 @@ function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
   const onClickHandler = () => {
     if (isDisabled) return;
     if (letterRef !== null) {
-      disableLetter();
-      setIsDisabled(true);
       game.verifLetter(letter);
     }
   };

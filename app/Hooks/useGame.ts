@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { GameState } from "@/app/enum/enum";
 
 export default function useGame() {
-  const MAXTRY = 8;
+  const MAXTRY = 5;
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const [secretWord, setSecretWord] = useState("");
@@ -119,6 +119,7 @@ export default function useGame() {
 
   return {
     LETTERS,
+    MAXTRY,
     secretWord,
     remainingTry,
     state,

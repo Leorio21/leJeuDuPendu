@@ -17,11 +17,10 @@ export default function page() {
       <Title name="Comment jouer" />
       <p>
         Le but du jeu est simple : deviner toute les lettres qui doivent
-        composer le(s) mot(s), avec un nombre limité de tentatives et des thèmes
-        fixés à l’avance.
+        composer le(s) mot(s), avec un nombre limité de tentatives et un thème
+        fixé à l’avance.
       </p>
       <p>
-        {" "}
         A chaque fois que le joueur devine une lettre, celle-ci est affichée.
         Dans le cas contraire, le nombre de tentatives restantes diminue…
       </p>
@@ -44,6 +43,9 @@ export default function page() {
         <li>Nombre de tentatives restantes</li>
         <li>Menu option</li>
       </ol>
+      <p>
+        Jouable avec le clavier uniquement.
+      </p>
     </article>
   );
 }

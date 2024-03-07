@@ -5,16 +5,17 @@ import { IoHeartSharp } from "react-icons/io5";
 
 interface RemainingTryProps {
   remainingTry: number;
+  maxTry: number;
 }
 
-function RemainingTry({ remainingTry }: RemainingTryProps) {
+function RemainingTry({ remainingTry, maxTry }: RemainingTryProps) {
   const [displayRemainingTry, setDisplayRemainingTry] = useState<ReactNode[]>(
     [],
   );
 
   const remainingTryToDisplay = () => {
     const newDisplay: ReactNode[] = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < maxTry; i++) {
       if (i < remainingTry) {
         newDisplay.push(
           <IoHeartSharp

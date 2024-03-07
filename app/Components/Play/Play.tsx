@@ -15,6 +15,7 @@ import Confetti from "react-confetti";
 interface PlayProps {
   game: {
     LETTERS: string;
+    MAXTRY: number;
     secretWord: string;
     remainingTry: number;
     state: GameState;
@@ -105,7 +106,7 @@ function Play({ game }: PlayProps) {
           <Button color={"gradient"} onClick={openOptionMenu}>
             <IoMenu style={{ width: "2rem", height: "2rem" }} />
           </Button>
-          <RemainingTry remainingTry={game.remainingTry} />
+          <RemainingTry remainingTry={game.remainingTry} maxTry={game.MAXTRY} />
         </div>
         <div className={styles.word}>
           {game.lettersToDisplay.split(" ").map((word, index) => (
