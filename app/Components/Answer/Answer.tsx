@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import styles from "./Answer.module.css";
 import classNames from "classnames";
 
@@ -12,7 +12,7 @@ function Answer({ secretWord }: AnswerProps) {
       <p>La réponse était :</p>
       <p className={classNames(styles.answer)}>{secretWord}</p>
     </>
-  )
+  );
 }
 
-export default Answer
+export default Answer;

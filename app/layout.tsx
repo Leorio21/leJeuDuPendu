@@ -3,14 +3,14 @@ import { Lato, Lobster } from "next/font/google";
 import "./globals.css";
 
 const lato = Lato({
-	weight: "400",
-	subsets: ["latin"],
-	variable: "--font--lato",
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font--lato",
 });
 const lobster = Lobster({
-	weight: "400",
-	subsets: ["latin"],
-	variable: "--font--lobster",
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font--lobster",
 });
 
 export const metadata: Metadata = {

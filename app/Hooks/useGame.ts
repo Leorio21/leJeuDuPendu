@@ -13,50 +13,49 @@ export default function useGame() {
   const [lettersToDisplay, setLettersToDisplay] = useState<string>("");
   const [lettersPlayed, setLettersPlayed] = useState<string>("");
   const [state, setState] = useState<GameState>(GameState.PENDING);
-  
+
   const gameMessage: { [key: number]: string } = {
     [GameState.WON]: "Vous avez gagné",
     [GameState.LOST]: "Vous avez perdu",
-    [GameState.PENDING]: "Options"
-  }
+    [GameState.PENDING]: "Options",
+  };
 
   const randomNumber = (min: number, max: number) => {
-		return Math.floor(Math.random() * (max - min)) + min;
-	};
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
 
   const dictionaryRemoveSecretWord = (newSecret: string) => {
-    setDictionary((prev) => prev.filter((word) => word !== newSecret))
-  }
+    setDictionary((prev) => prev.filter((word) => word !== newSecret));
+  };
 
   const isGameWon = () => {
     if (lettersToDisplay === secretWord && secretWord !== "") {
       setState(GameState.WON);
     }
-  }
+  };
 
   const isGameLost = () => {
     if (remainingTry > 0) {
       return;
     }
     setState(GameState.LOST);
-  }
+  };
 
   // **********************************************
   //                  Exported Fct
   // **********************************************
-  
+
   const newDictionary = (words: string[]) => {
     setIsCategorySelected(true);
     setDictionary(words);
-  }
+  };
 
   const replay = () => {
     secretWordPick();
     setLettersPlayed("");
     setState(GameState.PENDING);
     setRemainingTry(MAXTRY);
-
-  }
+  };
 
   const restartGame = () => {
     setSecretWord("");
@@ -66,10 +65,12 @@ export default function useGame() {
     setLettersPlayed("");
     setState(GameState.PENDING);
     setRemainingTry(MAXTRY);
-  }
+  };
 
   const verifLetter = (letter: string) => {
-    setLettersPlayed((prev) => {return prev + letter});
+    setLettersPlayed((prev) => {
+      return prev + letter;
+    });
 
     if (secretWord.includes(letter)) {
       setLettersToDisplay((prev) => {
@@ -80,11 +81,11 @@ export default function useGame() {
           }
         }
         return newDisplay.join("");
-      })
+      });
     } else {
-      setRemainingTry((prev) => prev - 1)
+      setRemainingTry((prev) => prev - 1);
     }
-  }
+  };
 
   const secretWordPick = () => {
     if (dictionary === null || dictionary.length <= 0) {
@@ -94,20 +95,25 @@ export default function useGame() {
     const wordIndex = randomNumber(0, dictionary.length - 1);
     setSecretWord(dictionary[wordIndex]);
     dictionaryRemoveSecretWord(dictionary[wordIndex]);
-  }
+  };
 
   useEffect(() => {
-    setLettersToDisplay(secretWord.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""))
+    setLettersToDisplay(
+      secretWord
+        .split("")
+        .map((letter) => (letter.match(/[A-Z]/g) ? "_" : letter))
+        .join(""),
+    );
   }, [secretWord]);
 
   useEffect(() => {
     isGameWon();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lettersToDisplay]);
 
   useEffect(() => {
     isGameLost();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remainingTry]);
 
   return {
@@ -124,8 +130,6 @@ export default function useGame() {
     restartGame,
     verifLetter,
     secretWordPick,
-    newDictionary
+    newDictionary,
   };
-
-
 }

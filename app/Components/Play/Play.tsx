@@ -10,7 +10,7 @@ import Answer from "../Answer/Answer";
 import RemainingTry from "../RemainingTry/RemainingTry";
 import Keyboard from "../Keyboard/Keyboard";
 import useWindowSize from "@/app/Hooks/useWindowSize";
-import Confetti from 'react-confetti';
+import Confetti from "react-confetti";
 
 interface PlayProps {
   game: {
@@ -22,13 +22,13 @@ interface PlayProps {
     lettersPlayed: string;
     dictionary: string[];
     isCategorieSelected: boolean;
-    gameMessage: { [key: number]: string; };
+    gameMessage: { [key: number]: string };
     replay: () => void;
     restartGame: () => void;
     verifLetter: (letter: string) => void;
     secretWordPick: () => void;
     newDictionary: (words: string[]) => void;
-  }
+  };
 }
 
 function Play({ game }: PlayProps) {
@@ -39,23 +39,23 @@ function Play({ game }: PlayProps) {
 
   const openOptionMenu = () => {
     gameMessageRef.current?.showModal();
-  }
+  };
 
   const closeOptionMenu = () => {
     gameMessageRef.current?.close();
-  }
+  };
 
   const replay = () => {
     game.replay();
     closeOptionMenu();
-  }
+  };
 
   useEffect(() => {
     if (game.state === GameState.PENDING) {
-      confettiRef.current?.classList.add(styles.hideConfetti)
+      confettiRef.current?.classList.add(styles.hideConfetti);
     }
     if (game.state === GameState.WON) {
-      confettiRef.current?.classList.remove(styles.hideConfetti)
+      confettiRef.current?.classList.remove(styles.hideConfetti);
       setTimeout(() => {
         openOptionMenu();
       }, 2000);
@@ -67,40 +67,57 @@ function Play({ game }: PlayProps) {
 
   return (
     <>
-    <div className={classNames(styles.confetti)} ref={confettiRef}>
-      <Confetti
-        width={width}
-        height={height}
-      />
-    </div>
+      <div className={classNames(styles.confetti)} ref={confettiRef}>
+        <Confetti width={width} height={height} />
+      </div>
       <dialog ref={gameMessageRef}>
         <div className={classNames(styles.dialogContent)}>
           <Title name={game.gameMessage[game.state]} />
-          {game.state === GameState.LOST && <Answer secretWord={game.secretWord} />}
-          {game.state === GameState.PENDING ?
-            <Button width={200} onClick={closeOptionMenu}>Continuer</Button> :
-            <Button width={200} onClick={replay} disabled={game.dictionary.length <= 0}>Rejouer</Button>}
-          
-          <Button width={200} onClick={game.restartGame} >Nouvelle catégorie</Button>
-          <Button width={200} color="gradient" href="/">Quitter</Button>
+          {game.state === GameState.LOST && (
+            <Answer secretWord={game.secretWord} />
+          )}
+          {game.state === GameState.PENDING ? (
+            <Button width={200} onClick={closeOptionMenu}>
+              Continuer
+            </Button>
+          ) : (
+            <Button
+              width={200}
+              onClick={replay}
+              disabled={game.dictionary.length <= 0}
+            >
+              Rejouer
+            </Button>
+          )}
+
+          <Button width={200} onClick={game.restartGame}>
+            Nouvelle catégorie
+          </Button>
+          <Button width={200} color="gradient" href="/">
+            Quitter
+          </Button>
         </div>
       </dialog>
       <div className={classNames(styles.wrapper)} id="test">
         <div className={classNames(styles.headContainer)}>
-        <Button color={"gradient"} onClick={openOptionMenu}><IoMenu style={{ width: "2rem", height: "2rem" }} /></Button>
-        <RemainingTry remainingTry={game.remainingTry}/>
+          <Button color={"gradient"} onClick={openOptionMenu}>
+            <IoMenu style={{ width: "2rem", height: "2rem" }} />
+          </Button>
+          <RemainingTry remainingTry={game.remainingTry} />
         </div>
         <div className={styles.word}>
-          {game.lettersToDisplay.split(" ").map((word, index) => <Word key={index} word={word} />)}
+          {game.lettersToDisplay.split(" ").map((word, index) => (
+            <Word key={index} word={word} />
+          ))}
         </div>
         <Keyboard
           game={{
             state: game.state,
             letters: game.LETTERS,
             lettersPlayed: game.lettersPlayed,
-            verifLetter: game.verifLetter
-          }
-        } />
+            verifLetter: game.verifLetter,
+          }}
+        />
       </div>
     </>
   );
