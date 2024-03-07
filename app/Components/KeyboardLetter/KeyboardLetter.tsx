@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from "./KeyboardLetter.module.css";
-import classNames from "classnames";
+import classNames from "classnames/bind";
 import { GameState } from '@/app/enum/enum';
 
 interface LetterCardProps {
@@ -8,20 +8,28 @@ interface LetterCardProps {
   tabIndex: number;
   game: {
     state: GameState;
+    letters: string;
+    lettersPlayed: string;
     verifLetter: (letter: string) => void;
   }
 }
 
+const cx = classNames.bind(styles);
+
 function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
 
-  const letterRef = useRef<HTMLParagraphElement>(null);
+  const letterRef = useRef<HTMLDivElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const handleClick = () => {
+  const disableLetter = () => {
+    letterRef.current!.classList.add(styles.disabled);
+  };
+
+  const onClickHandler = () => {
     if (isDisabled)
       return;
     if (letterRef !== null) {
-      letterRef.current!.classList.add(styles.disabled);
+      disableLetter();
       setIsDisabled(true);
       game.verifLetter(letter);
     }
@@ -29,20 +37,29 @@ function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
 
   const onKeyDownHandler = (event: any) => {
     if (event.key === " " || event.key === "Enter") {
-      handleClick();
+      onClickHandler();
     }
   }
 
   useEffect(() => {
-    if (isDisabled) {
+    if(isDisabled) {
+      return;
+    }
+    game.lettersPlayed.includes(letter) && disableLetter();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [game.lettersPlayed])
+
+  useEffect(() => {
+    if (game.state === GameState.WON || game.state === GameState.LOST) {
       setIsDisabled(false);
       letterRef.current!.classList.remove(styles.disabled);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [game.state]);
 
+
   return (
-    <div className={classNames(styles.card)} onKeyDown={onKeyDownHandler} tabIndex={tabIndex} onClick={() => handleClick()} ref={letterRef}>{letter}</div>
+    <div className={cx({card: true, disable: isDisabled})} onKeyDown={onKeyDownHandler} tabIndex={tabIndex} onClick={onClickHandler} ref={letterRef}>{letter}</div>
   )
 }
 

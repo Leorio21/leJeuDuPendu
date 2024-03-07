@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Lato, Lobster } from "next/font/google";
+import { Lato, Lobster } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
 	weight: "400",
 	subsets: ["latin"],

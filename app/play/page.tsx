@@ -1,27 +1,27 @@
 "use client";
 import React, { useEffect } from 'react';
 import Selectcategory from '../Components/Selectcategory/Selectcategory';
-import useSecretWord from '../Hooks/useSecretWord';
+import useGame from '../Hooks/useGame';
 import Play from '../Components/Play/Play';
 
 export default function Pages() {
 
-  const secretWord = useSecretWord();
+  const game = useGame();
 
   useEffect(() => {
-    if (secretWord.dictionary.length > 0) {
-      secretWord.pick();
+    if (game.dictionary.length > 0) {
+      game.secretWordPick();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secretWord.isCategorieSelected])
+  }, [game.isCategorieSelected])
 
-  if (secretWord.value === "") {
+  if (game.secretWord === "") {
     return (
-        <Selectcategory changeDictionary={secretWord.newDictionary}/>
+        <Selectcategory changeDictionary={game.newDictionary}/>
       )
     }
     
     return (
-      <Play secretWord={secretWord} />
+      <Play game={game} />
   )
 }

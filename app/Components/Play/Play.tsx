@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Play.module.css";
 import classNames from "classnames";
 import Button from "../Button/Button";
@@ -10,34 +10,32 @@ import Answer from "../Answer/Answer";
 import RemainingTry from "../RemainingTry/RemainingTry";
 import Keyboard from "../Keyboard/Keyboard";
 import useWindowSize from "@/app/Hooks/useWindowSize";
-import Confetti from 'react-confetti'
+import Confetti from 'react-confetti';
 
 interface PlayProps {
-  secretWord: {
-    value: string;
+  game: {
+    LETTERS: string;
+    secretWord: string;
+    remainingTry: number;
+    state: GameState;
+    lettersToDisplay: string;
+    lettersPlayed: string;
     dictionary: string[];
     isCategorieSelected: boolean;
-    reset: () => void;
-    pick: () => void;
+    gameMessage: { [key: number]: string; };
+    replay: () => void;
+    restartGame: () => void;
+    verifLetter: (letter: string) => void;
+    secretWordPick: () => void;
     newDictionary: (words: string[]) => void;
   }
 }
 
-function Play({ secretWord }: PlayProps) {
-  const MAXTRY = 8;
+function Play({ game }: PlayProps) {
   const gameMessageRef = useRef<HTMLDialogElement>(null);
   const confettiRef = useRef<HTMLDivElement>(null);
 
   const { width, height } = useWindowSize();
-
-  const [lettersToDisplay, setLettersToDisplay] = useState<string>(secretWord.value.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
-  const [gameState, setGameState] = useState<GameState>(GameState.PENDING);
-  const [remainingTry, setRemainingTry] = useState<number>(MAXTRY);
-  const gameMessage: {[key: number]: string} = {
-    [GameState.WON]: "Vous avez gagné",
-    [GameState.LOST]: "Vous avez perdu",
-    [GameState.PENDING]: "Options"
-  }
 
   const openOptionMenu = () => {
     gameMessageRef.current?.showModal();
@@ -47,63 +45,25 @@ function Play({ secretWord }: PlayProps) {
     gameMessageRef.current?.close();
   }
 
-  const isGameLost = () => {
-    if (remainingTry <= 0) {
-      setGameState(GameState.LOST);
+  const replay = () => {
+    game.replay();
+    closeOptionMenu();
+  }
+
+  useEffect(() => {
+    if (game.state === GameState.PENDING) {
+      confettiRef.current?.classList.add(styles.hideConfetti)
+    }
+    if (game.state === GameState.WON) {
+      confettiRef.current?.classList.remove(styles.hideConfetti)
+      setTimeout(() => {
+        openOptionMenu();
+      }, 2000);
+    }
+    if (game.state === GameState.LOST) {
       openOptionMenu();
     }
-  }
-
-  const isGameWon = () => {
-    if (lettersToDisplay.includes("_")) {
-      return;
-    }
-    confettiRef.current?.classList.remove(styles.confetti)
-    setTimeout(() => {
-      setGameState(GameState.WON);
-      openOptionMenu();
-    }, 2000);
-  }
-
-  const nextWord = () => {
-    secretWord.pick();
-    gameMessageRef.current?.close();
-    confettiRef.current?.classList.add(styles.confetti)
-    setGameState(GameState.PENDING);
-    setRemainingTry(MAXTRY);
-  }
-
-  const verifLetter = (letter: string) => {
-    if (secretWord.value.includes(letter)) {
-
-      setLettersToDisplay((prev) => {
-        const newDisplay = prev.split("");
-        for (let i = 0; i < secretWord.value.length; i++) {
-          if (secretWord.value[i] === letter) {
-            newDisplay[i] = letter;
-          }
-        }
-        return newDisplay.join("");
-      })
-    } else {
-      setRemainingTry((prev) => prev - 1)
-    }
-  }
-
-  useEffect(() => {
-    setLettersToDisplay(secretWord.value.split("").map((letter) => letter.match(/[A-Z]/g) ? "_" : letter).join(""));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secretWord.value]);
-
-  useEffect(() => {
-    isGameWon();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lettersToDisplay]);
-
-  useEffect(() => {
-    isGameLost();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remainingTry]);
+  }, [game.state]);
 
   return (
     <>
@@ -115,27 +75,30 @@ function Play({ secretWord }: PlayProps) {
     </div>
       <dialog ref={gameMessageRef}>
         <div className={classNames(styles.dialogContent)}>
-          <Title name={gameMessage[gameState]} />
-          {gameState === GameState.LOST && <Answer secretWord={secretWord.value} />}
-          {gameState === GameState.PENDING ?
+          <Title name={game.gameMessage[game.state]} />
+          {game.state === GameState.LOST && <Answer secretWord={game.secretWord} />}
+          {game.state === GameState.PENDING ?
             <Button width={200} onClick={closeOptionMenu}>Continuer</Button> :
-            <Button width={200} onClick={nextWord} disabled={secretWord.dictionary.length <= 0}>Rejouer</Button>}
+            <Button width={200} onClick={replay} disabled={game.dictionary.length <= 0}>Rejouer</Button>}
           
-          <Button width={200} onClick={secretWord.reset} >Nouvelle catégorie</Button>
+          <Button width={200} onClick={game.restartGame} >Nouvelle catégorie</Button>
           <Button width={200} color="gradient" href="/">Quitter</Button>
         </div>
       </dialog>
-      <div className={classNames(styles.wrapper)}>
+      <div className={classNames(styles.wrapper)} id="test">
         <div className={classNames(styles.headContainer)}>
         <Button color={"gradient"} onClick={openOptionMenu}><IoMenu style={{ width: "2rem", height: "2rem" }} /></Button>
-        <RemainingTry remainingTry={remainingTry}/>
+        <RemainingTry remainingTry={game.remainingTry}/>
         </div>
         <div className={styles.word}>
-          {lettersToDisplay.split(" ").map((word, index) => <Word key={index} word={word} />)}
+          {game.lettersToDisplay.split(" ").map((word, index) => <Word key={index} word={word} />)}
         </div>
-        <Keyboard game={{
-          state: gameState,
-          verifLetter: verifLetter
+        <Keyboard
+          game={{
+            state: game.state,
+            letters: game.LETTERS,
+            lettersPlayed: game.lettersPlayed,
+            verifLetter: game.verifLetter
           }
         } />
       </div>
