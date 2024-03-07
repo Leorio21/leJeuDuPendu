@@ -8,11 +8,12 @@ export default function useGame() {
 
   const [secretWord, setSecretWord] = useState("");
   const [dictionary, setDictionary] = useState<string[]>([]);
-  const [remainingTry, setRemainingTry] = useState<number>(MAXTRY);
+  const [remainingTry, setRemainingTry] = useState(MAXTRY);
+  const [selectedCategorie, SetSelectedCategorie] = useState("");
   const [isCategorieSelected, setIsCategorySelected] = useState(false);
-  const [lettersToDisplay, setLettersToDisplay] = useState<string>("");
-  const [lettersPlayed, setLettersPlayed] = useState<string>("");
-  const [state, setState] = useState<GameState>(GameState.PENDING);
+  const [lettersToDisplay, setLettersToDisplay] = useState("");
+  const [lettersPlayed, setLettersPlayed] = useState("");
+  const [state, setState] = useState(GameState.PENDING);
 
   const gameMessage: { [key: number]: string } = {
     [GameState.WON]: "Vous avez gagné",
@@ -46,7 +47,8 @@ export default function useGame() {
   //                  Exported Fct
   // **********************************************
 
-  const newDictionary = (words: string[]) => {
+  const newDictionary = (categorie: string, words: string[]) => {
+    SetSelectedCategorie(categorie);
     setIsCategorySelected(true);
     setDictionary(words);
   };
@@ -126,6 +128,7 @@ export default function useGame() {
     lettersToDisplay,
     lettersPlayed,
     dictionary,
+    selectedCategorie,
     isCategorieSelected,
     gameMessage,
     replay,

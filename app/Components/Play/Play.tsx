@@ -22,13 +22,14 @@ interface PlayProps {
     lettersToDisplay: string;
     lettersPlayed: string;
     dictionary: string[];
+    selectedCategorie: string;
     isCategorieSelected: boolean;
     gameMessage: { [key: number]: string };
     replay: () => void;
     restartGame: () => void;
     verifLetter: (letter: string) => void;
     secretWordPick: () => void;
-    newDictionary: (words: string[]) => void;
+    newDictionary: (categorie: string, words: string[]) => void;
   };
 }
 
@@ -92,7 +93,6 @@ function Play({ game }: PlayProps) {
               Rejouer
             </Button>
           )}
-
           <Button width={200} onClick={game.restartGame}>
             Nouvelle catégorie
           </Button>
@@ -101,11 +101,12 @@ function Play({ game }: PlayProps) {
           </Button>
         </div>
       </dialog>
-      <div className={classNames(styles.wrapper)} id="test">
+      <div className={classNames(styles.wrapper)}>
+        <Title name={game.selectedCategorie.toLowerCase()}/>
         <div className={classNames(styles.headContainer)}>
-          <Button color={"gradient"} onClick={openOptionMenu}>
-            <IoMenu style={{ width: "2rem", height: "2rem" }} />
-          </Button>
+            <Button color={"gradient"} onClick={openOptionMenu}>
+              <IoMenu style={{ width: "2rem", height: "2rem" }} />
+            </Button>
           <RemainingTry remainingTry={game.remainingTry} maxTry={game.MAXTRY} />
         </div>
         <div className={styles.word}>

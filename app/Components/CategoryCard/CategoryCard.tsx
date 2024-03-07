@@ -4,19 +4,24 @@ import styles from "./CategoryCard.module.css";
 import classNames from "classnames";
 
 interface CategoryCardProps {
-  item: string;
+  categorie: string;
   content: string[];
-  changeDictionary: (words: string[]) => void;
+  changeDictionary: (categorie:string, words: string[]) => void;
 }
 
 export default function CategoryCard({
-  item,
+  categorie,
   content,
   changeDictionary,
 }: CategoryCardProps) {
+
+  const onClickHandler = () => {
+    changeDictionary(categorie, content);
+  }
+
   const onKeyDownHandler = (event: any) => {
     if (event.key === " " || event.key === "enter") {
-      changeDictionary(content);
+      onClickHandler();
     }
   };
 
@@ -25,9 +30,9 @@ export default function CategoryCard({
       className={classNames(styles.card)}
       tabIndex={0}
       onKeyDown={onKeyDownHandler}
-      onClick={() => changeDictionary(content)}
+      onClick={onClickHandler}
     >
-      {item}
+      {categorie}
     </p>
   );
 }

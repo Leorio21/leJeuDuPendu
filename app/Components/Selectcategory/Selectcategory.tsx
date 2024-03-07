@@ -13,7 +13,7 @@ interface CategoriesData {
 }
 
 interface SelectcategoryProps {
-  changeDictionary: (words: string[]) => void;
+  changeDictionary: (categorie: string, words: string[]) => void;
 }
 
 export default function Selectcategory({
@@ -45,7 +45,7 @@ export default function Selectcategory({
           {categories.map((categorie) => (
             <CategoryCard
               key={categorie}
-              item={categorie}
+              categorie={categorie}
               content={categoriesFetched[categorie]}
               changeDictionary={changeDictionary}
             />
