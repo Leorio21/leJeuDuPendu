@@ -29,7 +29,7 @@ export default function useGame() {
   };
 
   const isGameWon = () => {
-    if (lettersToDisplay === secretWord && secretWord !== "") {
+    if (lettersToDisplay === secretWord && secretWord !== "" && state === GameState.PENDING) {
       setState(GameState.WON);
     }
   };
@@ -38,6 +38,7 @@ export default function useGame() {
     if (remainingTry > 0) {
       return;
     }
+    setLettersToDisplay(secretWord);
     setState(GameState.LOST);
   };
 

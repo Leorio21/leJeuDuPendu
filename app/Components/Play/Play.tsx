@@ -61,7 +61,9 @@ function Play({ game }: PlayProps) {
       }, 2000);
     }
     if (game.state === GameState.LOST) {
-      openOptionMenu();
+      setTimeout(() => {
+        openOptionMenu();
+      }, 2000);
     }
   }, [game.state]);
 
