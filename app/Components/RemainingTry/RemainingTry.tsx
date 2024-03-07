@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import styles from "./RemainingTry.module.css";
 import classNames from "classnames";
-import { IoHeartSharp } from "react-icons/io5";
+import Heart from "../Heart/Heart";
 
 interface RemainingTryProps {
   remainingTry: number;
@@ -9,38 +9,12 @@ interface RemainingTryProps {
 }
 
 function RemainingTry({ remainingTry, maxTry }: RemainingTryProps) {
-  const [displayRemainingTry, setDisplayRemainingTry] = useState<ReactNode[]>(
-    [],
-  );
 
-  const remainingTryToDisplay = () => {
-    const newDisplay: ReactNode[] = [];
+    const displayRemainingTry: ReactNode[] = [];
     for (let i = 0; i < maxTry; i++) {
-      if (i < remainingTry) {
-        newDisplay.push(
-          <IoHeartSharp
-            className={classNames(styles.hearth)}
-            key={i}
-            style={{ width: "50", height: "50" }}
-          />,
-        );
-      } else {
-        newDisplay.push(
-          <IoHeartSharp
-            className={classNames(styles.hearthEmpty)}
-            key={i}
-            style={{ width: "50", height: "50" }}
-          />,
-        );
-      }
+      displayRemainingTry.push(<Heart key={i} lifeNumber={i + 1} remainingTry={remainingTry} />)
     }
-    setDisplayRemainingTry(newDisplay);
-  };
 
-  useEffect(() => {
-    remainingTryToDisplay();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remainingTry]);
   return (
     <div className={classNames(styles.remainingTryContainer)}>
       {displayRemainingTry}

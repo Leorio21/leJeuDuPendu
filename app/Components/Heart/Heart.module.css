@@ -1,0 +1,8 @@
+.heart path {
+  fill: rgba(var(--button-color--light), 1);
+  transition: all .3s ease-in;
+}
+
+.empty path {
+  fill: rgba(var(--button-color--light), .2);
+}
