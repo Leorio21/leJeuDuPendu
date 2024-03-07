@@ -12,10 +12,6 @@ interface HeartProps {
 
 function Heart({lifeNumber, remainingTry}: HeartProps) {
 
-  useEffect(()=>{
-    console.log({lifeNumber}, {remainingTry}, {empty: lifeNumber > remainingTry})
-  }, [remainingTry])
-
   return <IoHeartSharp
   className={cx({heart: true, empty: lifeNumber > remainingTry})}
   style={{ width: "50", height: "50" }}
