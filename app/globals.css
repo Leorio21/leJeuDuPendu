@@ -55,6 +55,7 @@ body {
     rgb(var(--background-color--dark)),
     rgb(var(--background-color--light))
     );
+  color: #FFFFFF;
   font-family: var(--font--lato);
 }
 
