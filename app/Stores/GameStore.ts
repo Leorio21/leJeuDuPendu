@@ -22,6 +22,7 @@ interface GameStoreState {
   resetRemainingTry: () => void;
   decreaseRemainingTry: () => void;
   changeSecretWord: (newWord: string) => void;
+  initLettersToDisplay: (word: string) => void;
   changeLettersToDisplay: (newDisplay: string) => void;
   changeGameState: (newState: GameState) => void;
 }
@@ -89,6 +90,14 @@ export const useGameStore = create<GameStoreState>()((set) => ({
       dictionary: current.dictionary.filter((word) => word !== newWord),
     })),
 
+  initLettersToDisplay: (word: string) =>
+    set(() => ({
+      lettersToDisplay: word
+        .split("")
+        .map((letter) => (letter.match(/[A-Z]/g) ? "_" : letter))
+        .join(""),
+    })),
+
   changeLettersToDisplay: (newDisplay: string) =>
     set(() => ({ lettersToDisplay: newDisplay })),
 
@@ -108,6 +117,7 @@ export const secretWordPick = () => {
   }
   const wordIndex = randomNumber(0, dictionary.length - 1);
   useGameStore.getState().changeSecretWord(dictionary[wordIndex]);
+  useGameStore.getState().initLettersToDisplay(dictionary[wordIndex]);
 };
 
 export const replay = () => {
@@ -127,14 +137,17 @@ export const verifLetter = (letter: string) => {
       }
     }
     useGameStore.getState().changeLettersToDisplay(newDisplay.join(""));
+    isGameWon();
   } else {
     useGameStore.getState().decreaseRemainingTry();
+    isGameLost();
   }
 };
 
 export const isGameWon = () => {
   if (
-    useGameStore.getState().lettersToDisplay === useGameStore.getState().secretWord &&
+    useGameStore.getState().lettersToDisplay ===
+      useGameStore.getState().secretWord &&
     useGameStore.getState().secretWord !== "" &&
     useGameStore.getState().gameState === GameState.PENDING
   ) {
@@ -146,6 +159,8 @@ export const isGameLost = () => {
   if (useGameStore.getState().remainingTry > 0) {
     return;
   }
-  useGameStore.getState().changeLettersToDisplay(useGameStore.getState().secretWord);
+  useGameStore
+    .getState()
+    .changeLettersToDisplay(useGameStore.getState().secretWord);
   useGameStore.getState().changeGameState(GameState.LOST);
 };

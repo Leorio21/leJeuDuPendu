@@ -6,17 +6,11 @@ import { IoMenu } from "react-icons/io5";
 import Word from "../Word/Word";
 import Title from "../Title/Title";
 import { GameState } from "@/app/enum/enum";
-import Answer from "../Answer/Answer";
 import { RemainingTry } from "../RemainingTry/RemainingTry";
 import Keyboard from "../Keyboard/Keyboard";
 import useWindowSize from "@/app/Hooks/useWindowSize";
 import Confetti from "react-confetti";
-import {
-  useGameStore,
-  replay,
-  isGameWon,
-  isGameLost,
-} from "@/app/Stores/GameStore";
+import { useGameStore, replay } from "@/app/Stores/GameStore";
 import OptionMenu from "../OptionMenu/OptionMenu";
 
 function Play() {
@@ -26,13 +20,8 @@ function Play() {
   const { width, height } = useWindowSize();
 
   const gameState = useGameStore((state) => state.gameState);
-  const secretWord = useGameStore((state) => state.secretWord);
   const selectedCategory = useGameStore((state) => state.selectedCategory);
   const lettersToDisplay = useGameStore((state) => state.lettersToDisplay);
-  const remainingTry = useGameStore((state) => state.remainingTry);
-  const changeLettersToDisplay = useGameStore(
-    (state) => state.changeLettersToDisplay,
-  );
 
   const openOptionMenu = () => {
     gameMessageRef.current?.showModal();
@@ -46,24 +35,6 @@ function Play() {
     replay();
     closeOptionMenu();
   };
-
-  useEffect(() => {
-    isGameWon();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lettersToDisplay]);
-
-  useEffect(() => {
-    isGameLost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remainingTry]);
-
-  useEffect(() => {
-    const newDisplay = secretWord
-      .split("")
-      .map((letter) => (letter.match(/[A-Z]/g) ? "_" : letter))
-      .join("");
-    changeLettersToDisplay(newDisplay);
-  }, [secretWord]);
 
   useEffect(() => {
     if (gameState === GameState.PENDING) {
