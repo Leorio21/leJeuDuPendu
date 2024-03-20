@@ -1,140 +1,100 @@
-"use client";
-import { useEffect, useState } from "react";
-import { GameState } from "@/app/enum/enum";
+// "use client";
+// import { useEffect, useState } from "react";
+// import { GameState } from "@/app/enum/enum";
+// import { useGameStore } from "../Stores/GameStore";
 
-export default function useGame() {
-  const MAXTRY = 8;
-  const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+// export default function useGame() {
+//   const gameStore = useGameStore();
 
-  const [secretWord, setSecretWord] = useState("");
-  const [dictionary, setDictionary] = useState<string[]>([]);
-  const [remainingTry, setRemainingTry] = useState(MAXTRY);
-  const [selectedCategorie, SetSelectedCategorie] = useState("");
-  const [isCategorieSelected, setIsCategorySelected] = useState(false);
-  const [lettersToDisplay, setLettersToDisplay] = useState("");
-  const [lettersPlayed, setLettersPlayed] = useState("");
-  const [state, setState] = useState(GameState.PENDING);
+//   const randomNumber = (min: number, max: number) => {
+//     return Math.floor(Math.random() * (max - min)) + min;
+//   };
 
-  const gameMessage: { [key: number]: string } = {
-    [GameState.WON]: "Vous avez gagné",
-    [GameState.LOST]: "Vous avez perdu",
-    [GameState.PENDING]: "Options",
-  };
+//   const isGameWon = () => {
+//     if (
+//       lettersToDisplay === gameStore.secretWord &&
+//       gameStore.secretWord !== "" &&
+//       gameStore.gameState === GameState.PENDING
+//     ) {
+//       gameStore.changeGameState(GameState.WON);
+//     }
+//   };
 
-  const randomNumber = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
+//   const isGameLost = () => {
+//     if (gameStore.remainingTry > 0) {
+//       return;
+//     }
+//     setLettersToDisplay(gameStore.secretWord);
+//     gameStore.changeGameState(GameState.LOST);
+//   };
 
-  const dictionaryRemoveSecretWord = (newSecret: string) => {
-    setDictionary((prev) => prev.filter((word) => word !== newSecret));
-  };
+//   // **********************************************
+//   //                  Exported Fct
+//   // **********************************************
 
-  const isGameWon = () => {
-    if (lettersToDisplay === secretWord && secretWord !== "" && state === GameState.PENDING) {
-      setState(GameState.WON);
-    }
-  };
+//   const replay = () => {
+//     secretWordPick();
+//     gameStore.playedLettersReset();
+//     gameStore.changeGameState(GameState.PENDING);
+//     gameStore.resetRemainingTry();
+//   };
 
-  const isGameLost = () => {
-    if (remainingTry > 0) {
-      return;
-    }
-    setLettersToDisplay(secretWord);
-    setState(GameState.LOST);
-  };
+//   const restartGame = () => {
+//     gameStore.changeSecretWord("");
+//     gameStore.changeDictionary([]);
+//     gameStore.categoryIsSelected(false);
+//     setLettersToDisplay("");
+//     gameStore.playedLettersReset();
+//     gameStore.changeGameState(GameState.PENDING);
+//     gameStore.resetRemainingTry();
+//   };
 
-  // **********************************************
-  //                  Exported Fct
-  // **********************************************
+//   const verifLetter = (letter: string) => {
+//     gameStore.addPlayedLetter(letter);
 
-  const newDictionary = (categorie: string, words: string[]) => {
-    SetSelectedCategorie(categorie);
-    setIsCategorySelected(true);
-    setDictionary(words);
-  };
+//     if (gameStore.secretWord.includes(letter)) {
+//       setLettersToDisplay((prev) => {
+//         const newDisplay = prev.split("");
+//         for (let i = 0; i < gameStore.secretWord.length; i++) {
+//           if (gameStore.secretWord[i] === letter) {
+//             newDisplay[i] = letter;
+//           }
+//         }
+//         return newDisplay.join("");
+//       });
+//     } else {
+//       gameStore.decreaseRemainingTry();
+//     }
+//   };
 
-  const replay = () => {
-    secretWordPick();
-    setLettersPlayed("");
-    setState(GameState.PENDING);
-    setRemainingTry(MAXTRY);
-  };
+//   const secretWordPick = () => {
+//     if (gameStore.dictionary === null || gameStore.dictionary.length <= 0) {
+//       alert("Catégorie vide ou inconnue");
+//       return;
+//     }
+//     const wordIndex = randomNumber(0, gameStore.dictionary.length - 1);
+//     gameStore.changeSecretWord(gameStore.dictionary[wordIndex]);
+//   };
 
-  const restartGame = () => {
-    setSecretWord("");
-    setDictionary([]);
-    setIsCategorySelected(false);
-    setLettersToDisplay("");
-    setLettersPlayed("");
-    setState(GameState.PENDING);
-    setRemainingTry(MAXTRY);
-  };
+//   useEffect(() => {
+//     setLettersToDisplay(
+//       gameStore.secretWord
+//         .split("")
+//         .map((letter) => (letter.match(/[A-Z]/g) ? "_" : letter))
+//         .join(""),
+//     );
+//   }, [gameStore.secretWord]);
 
-  const verifLetter = (letter: string) => {
-    setLettersPlayed((prev) => {
-      return prev + letter;
-    });
+//   useEffect(() => {
+//     isGameWon();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [lettersToDisplay]);
 
-    if (secretWord.includes(letter)) {
-      setLettersToDisplay((prev) => {
-        const newDisplay = prev.split("");
-        for (let i = 0; i < secretWord.length; i++) {
-          if (secretWord[i] === letter) {
-            newDisplay[i] = letter;
-          }
-        }
-        return newDisplay.join("");
-      });
-    } else {
-      setRemainingTry((prev) => prev - 1);
-    }
-  };
+//   useEffect(() => {
+//     isGameLost();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [gameStore.remainingTry]);
 
-  const secretWordPick = () => {
-    if (dictionary === null || dictionary.length <= 0) {
-      alert("Catégorie vide ou inconnue");
-      return;
-    }
-    const wordIndex = randomNumber(0, dictionary.length - 1);
-    setSecretWord(dictionary[wordIndex]);
-    dictionaryRemoveSecretWord(dictionary[wordIndex]);
-  };
-
-  useEffect(() => {
-    setLettersToDisplay(
-      secretWord
-        .split("")
-        .map((letter) => (letter.match(/[A-Z]/g) ? "_" : letter))
-        .join(""),
-    );
-  }, [secretWord]);
-
-  useEffect(() => {
-    isGameWon();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lettersToDisplay]);
-
-  useEffect(() => {
-    isGameLost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remainingTry]);
-
-  return {
-    LETTERS,
-    MAXTRY,
-    secretWord,
-    remainingTry,
-    state,
-    lettersToDisplay,
-    lettersPlayed,
-    dictionary,
-    selectedCategorie,
-    isCategorieSelected,
-    gameMessage,
-    replay,
-    restartGame,
-    verifLetter,
-    secretWordPick,
-    newDictionary,
-  };
-}
+//   return {
+//   };
+// }

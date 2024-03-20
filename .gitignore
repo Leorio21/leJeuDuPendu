@@ -15,6 +15,7 @@
 
 # production
 /build
+/testzustand
 
 # misc
 .DS_Store

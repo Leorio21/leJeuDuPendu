@@ -1,19 +1,15 @@
 import React, { ReactNode } from "react";
 import styles from "./RemainingTry.module.css";
 import classNames from "classnames";
-import Heart from "../Heart/Heart";
+import { Heart } from "../Heart/Heart";
+import { MAXTRY } from "@/app/Constantes/Constantes";
 
-interface RemainingTryProps {
-  remainingTry: number;
-  maxTry: number;
-}
+function RemainingTryComponent() {
 
-function RemainingTry({ remainingTry, maxTry }: RemainingTryProps) {
-
-    const displayRemainingTry: ReactNode[] = [];
-    for (let i = 0; i < maxTry; i++) {
-      displayRemainingTry.push(<Heart key={i} lifeNumber={i + 1} remainingTry={remainingTry} />)
-    }
+  const displayRemainingTry: ReactNode[] = [];
+  for (let i = 0; i < MAXTRY; i++) {
+    displayRemainingTry.push(<Heart key={i} lifeNumber={i + 1} />)
+  }
 
   return (
     <div className={classNames(styles.remainingTryContainer)}>
@@ -22,4 +18,4 @@ function RemainingTry({ remainingTry, maxTry }: RemainingTryProps) {
   );
 }
 
-export default RemainingTry;
+export const RemainingTry = React.memo(RemainingTryComponent);

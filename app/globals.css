@@ -16,6 +16,8 @@
   --button-color--disabled: 149, 149, 149;
 
   --border-radius: 10px;
+
+  scroll-padding: 0;
 }
 
 /* [tabIndex] {

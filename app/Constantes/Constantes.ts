@@ -1,0 +1,2 @@
+export const MAXTRY = 8;
+export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -2,24 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./KeyboardLetter.module.css";
 import classNames from "classnames/bind";
 import { GameState } from "@/app/enum/enum";
+import { useGameStore, verifLetter } from "@/app/Stores/GameStore";
 
 interface LetterCardProps {
   letter: string;
   tabIndex: number;
-  game: {
-    state: GameState;
-    letters: string;
-    lettersPlayed: string;
-    verifLetter: (letter: string) => void;
-  };
 }
 
 const cx = classNames.bind(styles);
 
-function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
+function KeyboardLetter({ letter, tabIndex }: LetterCardProps) {
   const letterRef = useRef<HTMLDivElement>(null);
   const [isDisabled, setIsDisabled] = useState(false);
 
+  const { gameState, playedLetters } = useGameStore();
+  
   const disableLetter = () => {
     letterRef.current!.classList.add(styles.disabled);
   };
@@ -27,7 +24,7 @@ function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
   const onClickHandler = () => {
     if (isDisabled) return;
     if (letterRef !== null) {
-      game.verifLetter(letter);
+      verifLetter(letter);
     }
   };
 
@@ -41,17 +38,17 @@ function KeyboardLetter({ letter, tabIndex, game }: LetterCardProps) {
     if (isDisabled) {
       return;
     }
-    game.lettersPlayed.includes(letter) && disableLetter();
+    playedLetters.has(letter) && disableLetter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game.lettersPlayed]);
+  }, [playedLetters]);
 
   useEffect(() => {
-    if (game.state === GameState.WON || game.state === GameState.LOST) {
+    if (gameState === GameState.WON || gameState === GameState.LOST) {
       setIsDisabled(false);
       letterRef.current!.classList.remove(styles.disabled);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game.state]);
+  }, [gameState]);
 
   return (
     <div

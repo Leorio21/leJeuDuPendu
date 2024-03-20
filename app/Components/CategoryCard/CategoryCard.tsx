@@ -1,23 +1,20 @@
-"use cleint";
+"use client";
 import React from "react";
 import styles from "./CategoryCard.module.css";
 import classNames from "classnames";
+import { useGameStore } from "@/app/Stores/GameStore";
 
 interface CategoryCardProps {
-  categorie: string;
+  category: string;
   content: string[];
-  changeDictionary: (categorie:string, words: string[]) => void;
 }
 
-export default function CategoryCard({
-  categorie,
-  content,
-  changeDictionary,
-}: CategoryCardProps) {
+export default function CategoryCard({ category, content }: CategoryCardProps) {
+  const startGame = useGameStore((state) => state.startGame);
 
   const onClickHandler = () => {
-    changeDictionary(categorie, content);
-  }
+    startGame(category, content);
+  };
 
   const onKeyDownHandler = (event: any) => {
     if (event.key === " " || event.key === "enter") {
@@ -32,7 +29,7 @@ export default function CategoryCard({
       onKeyDown={onKeyDownHandler}
       onClick={onClickHandler}
     >
-      {categorie}
+      {category}
     </p>
   );
 }

@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./Answer.module.css";
 import classNames from "classnames";
+import { useGameStore } from "@/app/Stores/GameStore";
 
-interface AnswerProps {
-  secretWord: string;
-}
+function Answer() {
+  const secretWord = useGameStore((state) => state.secretWord);
 
-function Answer({ secretWord }: AnswerProps) {
   return (
     <>
       <p>La réponse était :</p>

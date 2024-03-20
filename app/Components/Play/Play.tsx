@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./Play.module.css";
 import classNames from "classnames";
 import Button from "../Button/Button";
@@ -7,37 +7,32 @@ import Word from "../Word/Word";
 import Title from "../Title/Title";
 import { GameState } from "@/app/enum/enum";
 import Answer from "../Answer/Answer";
-import RemainingTry from "../RemainingTry/RemainingTry";
+import { RemainingTry } from "../RemainingTry/RemainingTry";
 import Keyboard from "../Keyboard/Keyboard";
 import useWindowSize from "@/app/Hooks/useWindowSize";
 import Confetti from "react-confetti";
+import {
+  useGameStore,
+  replay,
+  isGameWon,
+  isGameLost,
+} from "@/app/Stores/GameStore";
+import OptionMenu from "../OptionMenu/OptionMenu";
 
-interface PlayProps {
-  game: {
-    LETTERS: string;
-    MAXTRY: number;
-    secretWord: string;
-    remainingTry: number;
-    state: GameState;
-    lettersToDisplay: string;
-    lettersPlayed: string;
-    dictionary: string[];
-    selectedCategorie: string;
-    isCategorieSelected: boolean;
-    gameMessage: { [key: number]: string };
-    replay: () => void;
-    restartGame: () => void;
-    verifLetter: (letter: string) => void;
-    secretWordPick: () => void;
-    newDictionary: (categorie: string, words: string[]) => void;
-  };
-}
-
-function Play({ game }: PlayProps) {
+function Play() {
   const gameMessageRef = useRef<HTMLDialogElement>(null);
   const confettiRef = useRef<HTMLDivElement>(null);
 
   const { width, height } = useWindowSize();
+
+  const gameState = useGameStore((state) => state.gameState);
+  const secretWord = useGameStore((state) => state.secretWord);
+  const selectedCategory = useGameStore((state) => state.selectedCategory);
+  const lettersToDisplay = useGameStore((state) => state.lettersToDisplay);
+  const remainingTry = useGameStore((state) => state.remainingTry);
+  const changeLettersToDisplay = useGameStore(
+    (state) => state.changeLettersToDisplay,
+  );
 
   const openOptionMenu = () => {
     gameMessageRef.current?.showModal();
@@ -47,81 +42,70 @@ function Play({ game }: PlayProps) {
     gameMessageRef.current?.close();
   };
 
-  const replay = () => {
-    game.replay();
+  const choiceReplay = () => {
+    replay();
     closeOptionMenu();
   };
 
   useEffect(() => {
-    if (game.state === GameState.PENDING) {
+    isGameWon();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lettersToDisplay]);
+
+  useEffect(() => {
+    isGameLost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [remainingTry]);
+
+  useEffect(() => {
+    const newDisplay = secretWord
+      .split("")
+      .map((letter) => (letter.match(/[A-Z]/g) ? "_" : letter))
+      .join("");
+    changeLettersToDisplay(newDisplay);
+  }, [secretWord]);
+
+  useEffect(() => {
+    if (gameState === GameState.PENDING) {
       confettiRef.current?.classList.add(styles.hideConfetti);
     }
-    if (game.state === GameState.WON) {
+    if (gameState === GameState.WON) {
       confettiRef.current?.classList.remove(styles.hideConfetti);
       setTimeout(() => {
         openOptionMenu();
       }, 2000);
     }
-    if (game.state === GameState.LOST) {
+    if (gameState === GameState.LOST) {
       setTimeout(() => {
         openOptionMenu();
       }, 2000);
     }
-  }, [game.state]);
+  }, [gameState]);
 
   return (
     <>
       <div className={classNames(styles.confetti)} ref={confettiRef}>
         <Confetti width={width} height={height} />
       </div>
-      <dialog ref={gameMessageRef}>
-        <div className={classNames(styles.dialogContent)}>
-          <Title name={game.gameMessage[game.state]} />
-          {game.state === GameState.LOST && (
-            <Answer secretWord={game.secretWord} />
-          )}
-          {game.state === GameState.PENDING ? (
-            <Button width={200} onClick={closeOptionMenu}>
-              Continuer
-            </Button>
-          ) : (
-            <Button
-              width={200}
-              onClick={replay}
-              disabled={game.dictionary.length <= 0}
-            >
-              Rejouer
-            </Button>
-          )}
-          <Button width={200} onClick={game.restartGame}>
-            Nouvelle catégorie
-          </Button>
-          <Button width={200} color="gradient" href="/">
-            Quitter
-          </Button>
-        </div>
-      </dialog>
+      <OptionMenu
+        gameMessageRef={gameMessageRef}
+        closeOptionMenu={closeOptionMenu}
+        choiceReplay={choiceReplay}
+      />
       <div className={classNames(styles.wrapper)}>
-        <Title name={game.selectedCategorie.toLowerCase()}/>
+        <Title name={selectedCategory.toLowerCase()} />
         <div className={classNames(styles.headContainer)}>
-            <Button color={"gradient"} onClick={openOptionMenu}>
-              <IoMenu style={{ width: "2rem", height: "2rem" }} />
-            </Button>
-          <RemainingTry remainingTry={game.remainingTry} maxTry={game.MAXTRY} />
+          <Button color={"gradient"} onClick={openOptionMenu}>
+            <IoMenu style={{ width: "2rem", height: "2rem" }} />
+          </Button>
+          <RemainingTry />
         </div>
         <div className={styles.word}>
-          {game.lettersToDisplay.split(" ").map((word, index) => (
+          {lettersToDisplay.split(" ").map((word, index) => (
             <Word key={index} word={word} />
           ))}
         </div>
-        <Keyboard
-          game={{
-            state: game.state,
-            letters: game.LETTERS,
-            lettersPlayed: game.lettersPlayed,
-            verifLetter: game.verifLetter,
-          }}
-        />
+        <Keyboard />
       </div>
     </>
   );

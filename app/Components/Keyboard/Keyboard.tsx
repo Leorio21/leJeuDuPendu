@@ -1,36 +1,32 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./Keyboard.module.css";
 import classNames from "classnames";
-import LetterKeyboard from "../KeyboardLetter/KeyboardLetter";
+import KeyboardLetter from "../KeyboardLetter/KeyboardLetter";
 import { GameState } from "@/app/enum/enum";
+import { LETTERS } from "@/app/Constantes/Constantes";
+import { useGameStore, verifLetter } from "@/app/Stores/GameStore";
 
-interface KeyboardProps {
-  game: {
-    state: GameState;
-    letters: string;
-    lettersPlayed: string;
-    verifLetter: (letter: string) => void;
-  };
-}
-
-function Keyboard({ game }: KeyboardProps) {
+function Keyboard() {
   const keyboardRef = useRef<HTMLDivElement>(null);
+
+  const gameState = useGameStore((state) => state.gameState);
+  const playedLetters = useGameStore((state) => state.playedLetters);
 
   const onKeyDownHandler = (event: any) => {
     const letterPlayed: string = event.key.toUpperCase();
     if (
-      game.letters.includes(letterPlayed) &&
-      !game.lettersPlayed.includes(letterPlayed) &&
-      game.state === GameState.PENDING
+      LETTERS.includes(letterPlayed) &&
+      !playedLetters.has(letterPlayed) &&
+      gameState === GameState.PENDING
     ) {
-      game.verifLetter(letterPlayed);
+      verifLetter(letterPlayed);
     }
   };
 
   useEffect(() => {
     keyboardRef.current?.focus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game.state]);
+  }, [gameState]);
 
   return (
     <div
@@ -39,8 +35,8 @@ function Keyboard({ game }: KeyboardProps) {
       onKeyDown={onKeyDownHandler}
       ref={keyboardRef}
     >
-      {game.letters.split("").map((letter) => (
-        <LetterKeyboard key={letter} letter={letter} game={game} tabIndex={0} />
+      {LETTERS.split("").map((letter) => (
+        <KeyboardLetter key={letter} letter={letter} tabIndex={0} />
       ))}
     </div>
   );

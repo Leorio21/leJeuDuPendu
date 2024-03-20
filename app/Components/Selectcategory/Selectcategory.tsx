@@ -6,29 +6,14 @@ import Title from "../Title/Title";
 import { IoArrowUndoSharp } from "react-icons/io5";
 import Button from "../Button/Button";
 import categoriesJson from "../../../public/data.json";
-import { useRouter } from "next/navigation";
 
 interface CategoriesData {
   [key: string]: string[];
 }
 
-interface SelectcategoryProps {
-  changeDictionary: (categorie: string, words: string[]) => void;
-}
-
-export default function Selectcategory({
-  changeDictionary,
-}: SelectcategoryProps) {
+export default function Selectcategory() {
   const categoriesFetched: CategoriesData = categoriesJson;
   const categories: string[] = [];
-
-  const router = useRouter();
-
-  const onKeyDownHandler = (event: any) => {
-    if (event.key === " " || event.key === "enter") {
-      router.replace(event.target.href);
-    }
-  };
 
   for (const categorie in categoriesFetched) {
     categories.push(categorie);
@@ -42,12 +27,11 @@ export default function Selectcategory({
       <section className={classNames(styles.gameApp)}>
         <Title name="Choisissez une catégorie" />
         <div className={classNames(styles.categoriesContainer)}>
-          {categories.map((categorie) => (
+          {categories.map((category) => (
             <CategoryCard
-              key={categorie}
-              categorie={categorie}
-              content={categoriesFetched[categorie]}
-              changeDictionary={changeDictionary}
+              key={category}
+              category={category}
+              content={categoriesFetched[category]}
             />
           ))}
         </div>

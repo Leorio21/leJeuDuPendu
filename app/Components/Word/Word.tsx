@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Word.module.css";
 import classNames from "classnames";
 import WordLetter from "../WordLetter/WordLetter";
+import { useGameStore } from "@/app/Stores/GameStore";
 
 interface WordProps {
   word: string;
