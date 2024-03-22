@@ -8,6 +8,7 @@
   background: rgb(var(--secondary-color));
   color: rgb(var(--background-color--dark));
   font-size: 1.3rem;
+  cursor: pointer;
 }
 
 .card:hover, .card:focus {

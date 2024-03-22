@@ -126,6 +126,7 @@ export const replay = () => {
 };
 
 export const verifLetter = (letter: string) => {
+  useGameStore.getState().addPlayedLetter(letter);
   const secretWord = useGameStore.getState().secretWord;
 
   if (secretWord.includes(letter)) {

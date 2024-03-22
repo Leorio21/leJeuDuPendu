@@ -22,7 +22,7 @@ function KeyboardLetter({ letter, tabIndex }: LetterCardProps) {
   };
 
   const onClickHandler = () => {
-    // if (isDisabled) return;
+    if (isDisabled) return;
     console.log("click");
     if (letterRef !== null) {
       verifLetter(letter);
