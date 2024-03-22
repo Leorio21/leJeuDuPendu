@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { GameState } from "@/app/enum/enum";
 import { useGameStore, verifLetter } from "@/app/Stores/GameStore";
 
-interface LetterCardProps {
+type LetterCardProps = {
   letter: string;
   tabIndex: number;
 }
@@ -22,7 +22,8 @@ function KeyboardLetter({ letter, tabIndex }: LetterCardProps) {
   };
 
   const onClickHandler = () => {
-    if (isDisabled) return;
+    // if (isDisabled) return;
+    console.log("click");
     if (letterRef !== null) {
       verifLetter(letter);
     }

@@ -4,7 +4,7 @@ import styles from "./CategoryCard.module.css";
 import classNames from "classnames";
 import { useGameStore } from "@/app/Stores/GameStore";
 
-interface CategoryCardProps {
+type CategoryCardProps = {
   category: string;
   content: string[];
 }

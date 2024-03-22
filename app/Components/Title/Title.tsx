@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Title.module.css";
 import classNames from "classnames";
 
-interface TitleProps {
+type TitleProps = {
   name: string;
 }
 

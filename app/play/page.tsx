@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import Selectcategory from "../Components/Selectcategory/Selectcategory";
 import Play from "../Components/Play/Play";
 import { useGameStore, secretWordPick } from "../Stores/GameStore";
-import { CgLayoutGridSmall } from "react-icons/cg";
 
 export default function Pages() {
 

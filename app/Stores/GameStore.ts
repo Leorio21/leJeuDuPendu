@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { GameState } from "../enum/enum";
 import { MAXTRY } from "../Constantes/Constantes";
 
-interface GameStoreState {
+type GameStoreState = {
   dictionary: string[];
   playedLetters: Set<string>;
   selectedCategory: string;
@@ -144,7 +144,7 @@ export const verifLetter = (letter: string) => {
   }
 };
 
-export const isGameWon = () => {
+const isGameWon = () => {
   if (
     useGameStore.getState().lettersToDisplay ===
       useGameStore.getState().secretWord &&
@@ -155,7 +155,7 @@ export const isGameWon = () => {
   }
 };
 
-export const isGameLost = () => {
+const isGameLost = () => {
   if (useGameStore.getState().remainingTry > 0) {
     return;
   }

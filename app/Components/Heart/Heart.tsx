@@ -6,7 +6,7 @@ import { useGameStore } from "@/app/Stores/GameStore";
 
 const cx = classNames.bind(styles);
 
-interface HeartProps {
+type HeartProps = {
   lifeNumber: number;
 }
 

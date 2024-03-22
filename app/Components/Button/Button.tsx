@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Urls } from "@/app/Types/urls";
 import { useRouter } from "next/navigation";
 
-interface ButtonProps extends PropsWithChildren {
+type ButtonProps = {
   width?: number;
   height?: number;
   color?: "blue" | "gradient";
@@ -14,7 +14,7 @@ interface ButtonProps extends PropsWithChildren {
   onClick?: (() => void) | undefined;
   disabled?: boolean;
   positionAbsolute?: boolean;
-}
+} & PropsWithChildren;
 
 const cx = classNames.bind(styles);
 

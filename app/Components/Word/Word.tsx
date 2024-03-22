@@ -4,7 +4,7 @@ import classNames from "classnames";
 import WordLetter from "../WordLetter/WordLetter";
 import { useGameStore } from "@/app/Stores/GameStore";
 
-interface WordProps {
+type WordProps = {
   word: string;
 }
 

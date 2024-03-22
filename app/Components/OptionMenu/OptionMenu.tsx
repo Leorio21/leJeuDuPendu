@@ -7,7 +7,7 @@ import Title from "../Title/Title";
 import Button from "../Button/Button";
 import Answer from "../Answer/Answer";
 
-interface OptionMenuProps {
+type OptionMenuProps = {
   gameMessageRef: React.RefObject<HTMLDialogElement>;
   closeOptionMenu: () => void;
   choiceReplay: () => void;
@@ -48,7 +48,7 @@ function OptionMenu({
         <Button width={200} onClick={gameReset}>
           Nouvelle catégorie
         </Button>
-        <Button width={200} color="gradient" href="/">
+        <Button width={200} color="gradient" onClick={gameReset} href="/">
           Quitter
         </Button>
       </div>

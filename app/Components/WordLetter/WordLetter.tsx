@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./WordLetter.module.css";
 import classNames from "classnames/bind";
 
-interface WordLetterProps {
+type WordLetterProps = {
   letter: string;
 }
 

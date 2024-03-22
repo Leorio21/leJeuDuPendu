@@ -7,7 +7,7 @@ import { IoArrowUndoSharp } from "react-icons/io5";
 import Button from "../Button/Button";
 import categoriesJson from "../../../public/data.json";
 
-interface CategoriesData {
+type CategoriesData = {
   [key: string]: string[];
 }
 
